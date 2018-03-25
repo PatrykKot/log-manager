@@ -46,29 +46,38 @@ public class EventsPresenter implements Presenter<EventsView> {
     @Override
     public void handleNavigation(ViewChangeListener.ViewChangeEvent event, EventsView view) {
         List<String> parameters = ParametersUtil.resolve(event);
-        long reportId = Long.parseLong(parameters.get(REPORT_ID_INDEX));
-        long customerId = Long.parseLong(parameters.get(ReportsPresenter.CUSTOMER_ID_INDEX));
+        Long reportId = Long.parseLong(parameters.get(REPORT_ID_INDEX));
+        Long customerId = Long.parseLong(parameters.get(ReportsPresenter.CUSTOMER_ID_INDEX));
+
+        List<EventDto> events = reportService.getReport(reportId).getEvents().stream()
+                .map(EventDto::new)
+                .collect(Collectors.toList());
 
         Optional<FormatterConfigEntity> optionalFormatterConfig = customerService.getFormatterConfig(customerId);
-
         if (optionalFormatterConfig.isPresent()) {
             LogFormatter formatter = new LogFormatter(optionalFormatterConfig.get());
-            List<EventDto> events = reportService.getReport(reportId).getEvents().stream()
-                    .map(EventDto::new)
-                    .collect(Collectors.toList());
-
-            String formattedLog = formatter.format(events).stream()
-                    .collect(Collectors.joining("\r\n"));
-            view.setLog(formattedLog);
-
-            filtersPresenter.initView(filtersView, events);
+            setLogs(formatter, events, view);
+            initFilters(view, events, formatter);
         } else {
-            // TODO
         }
     }
 
     @Override
     public void initView(EventsView view) {
         view.addOnFiltersButtonClick(event -> mainUi.addWindow(filtersView));
+    }
+
+    private void initFilters(EventsView view, List<EventDto> events, LogFormatter formatter) {
+        filtersPresenter.setOnFilterUpdated(filtered -> {
+            setLogs(formatter, filtered, view);
+        });
+
+        filtersPresenter.initView(filtersView, events);
+    }
+
+    private void setLogs(LogFormatter formatter, List<EventDto> events, EventsView view) {
+        String log = formatter.format(events).stream()
+                .collect(Collectors.joining("\r\n"));
+        view.setLog(log);
     }
 }
