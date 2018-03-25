@@ -1,0 +1,24 @@
+<vaadin-vertical-layout size-full responsive margin="false" spacing="false">
+    <vaadin-vertical-layout _id="menuLayout" width="250px" spacing="false" margin="false" style-name="menu-layout" height-full>
+        <vaadin-label :center style-name="menu-layout-app-name" height="150px">Logs</vaadin-label>
+        <vaadin-vertical-layout margin="false" :expand>
+            <vaadin-button _id="dashboardButton" width-full>
+                Dashboard
+            </vaadin-button>
+            <vaadin-button _id="customersButton" width-full>
+                Customers
+            </vaadin-button>
+            <vaadin-button _id="configurationButton" width-full>
+                Configuration
+            </vaadin-button>
+            <vaadin-button width-full>
+                About
+            </vaadin-button>
+            <vaadin-button width-full>
+                Log out
+            </vaadin-button>
+        </vaadin-vertical-layout>
+    </vaadin-vertical-layout>
+    <vaadin-panel _id="contentPanel" size-full :expand>
+    </vaadin-panel>
+</vaadin-vertical-layout>

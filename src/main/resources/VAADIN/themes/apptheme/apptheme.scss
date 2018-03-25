@@ -1,0 +1,9 @@
+@import "../valo/valo.scss";
+@import "menu";
+@import "events";
+
+@mixin apptheme {
+  @include valo;
+  @include menu;
+  @include events;
+}

@@ -1,0 +1,28 @@
+@mixin menu {
+  .menu-layout {
+    background-image: url("menuLayoutBackground.jpg");
+
+    .v-label {
+      color: white;
+      font-size: 20px;
+    }
+
+    .v-button {
+      border: none;
+      border-radius: 0px;
+      background: none;
+      box-shadow: none;
+      text-align: left;
+      color: white;
+    }
+
+    .v-button:hover, .v-button:active {
+      background-color: #61935e;
+    }
+
+    .menu-layout-app-name {
+      font-size: 25px;
+      margin-top: 30px;
+    }
+  }
+}
