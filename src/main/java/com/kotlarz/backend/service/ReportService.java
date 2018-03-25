@@ -24,7 +24,8 @@ public class ReportService {
     @Transactional
     public ReportEntity getReport(Long reportId) {
         ReportEntity domain = reportRepository.findOne(reportId);
-        Hibernate.initialize(domain.getEvents());
+        if (domain != null)
+            Hibernate.initialize(domain.getEvents());
         return domain;
     }
 }

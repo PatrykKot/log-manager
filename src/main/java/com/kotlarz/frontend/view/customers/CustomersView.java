@@ -1,7 +1,7 @@
 package com.kotlarz.frontend.view.customers;
 
 import com.kotlarz.frontend.dto.CustomerDto;
-import com.kotlarz.frontend.presenter.CustomersPresenter;
+import com.kotlarz.frontend.presenter.customers.CustomersPresenter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -35,8 +35,7 @@ public class CustomersView extends CustomersViewDesign implements View {
         customersGrid.addSelectionListener(selection -> {
             if (onCustomerSelected != null) {
                 Optional<CustomerDto> firstSelectedItem = selection.getFirstSelectedItem();
-                if (firstSelectedItem.isPresent())
-                    onCustomerSelected.accept(firstSelectedItem.get());
+                firstSelectedItem.ifPresent(customerDto -> onCustomerSelected.accept(customerDto));
             }
         });
 

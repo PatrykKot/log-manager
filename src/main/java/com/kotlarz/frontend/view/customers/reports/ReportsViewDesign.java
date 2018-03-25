@@ -1,4 +1,4 @@
-package com.kotlarz.frontend.view.reports;
+package com.kotlarz.frontend.view.customers.reports;
 
 import com.kotlarz.frontend.dto.ReportDto;
 import com.vaadin.annotations.DesignRoot;

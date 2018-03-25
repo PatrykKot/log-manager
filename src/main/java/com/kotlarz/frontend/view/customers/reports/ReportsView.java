@@ -1,7 +1,7 @@
-package com.kotlarz.frontend.view.reports;
+package com.kotlarz.frontend.view.customers.reports;
 
 import com.kotlarz.frontend.dto.ReportDto;
-import com.kotlarz.frontend.presenter.ReportsPresenter;
+import com.kotlarz.frontend.presenter.customers.reports.ReportsPresenter;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -30,8 +30,7 @@ public class ReportsView extends ReportsViewDesign implements View {
         customerReportsGrid.addSelectionListener(selection -> {
             if (onReportSelected != null) {
                 Optional<ReportDto> firstSelectedItem = selection.getFirstSelectedItem();
-                if (firstSelectedItem.isPresent())
-                    onReportSelected.accept(firstSelectedItem.get());
+                firstSelectedItem.ifPresent(reportDto -> onReportSelected.accept(reportDto));
             }
         });
 

@@ -1,14 +1,17 @@
-package com.kotlarz.frontend.presenter;
+package com.kotlarz.frontend.presenter.customers.reports.events;
 
-import com.kotlarz.backend.domain.EventEntity;
 import com.kotlarz.backend.domain.FormatterConfigEntity;
-import com.kotlarz.backend.domain.ReportEntity;
 import com.kotlarz.backend.service.CustomerService;
 import com.kotlarz.backend.service.ReportService;
 import com.kotlarz.frontend.dto.EventDto;
+import com.kotlarz.frontend.presenter.Presenter;
+import com.kotlarz.frontend.presenter.customers.reports.ReportsPresenter;
+import com.kotlarz.frontend.presenter.customers.reports.events.filters.FiltersPresenter;
+import com.kotlarz.frontend.ui.MainUI;
 import com.kotlarz.frontend.util.LogFormatter;
 import com.kotlarz.frontend.util.ParametersUtil;
-import com.kotlarz.frontend.view.events.EventsView;
+import com.kotlarz.frontend.view.customers.reports.events.EventsView;
+import com.kotlarz.frontend.view.customers.reports.events.filters.FiltersView;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -31,6 +34,15 @@ public class EventsPresenter implements Presenter<EventsView> {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private FiltersPresenter filtersPresenter;
+
+    @Autowired
+    private MainUI mainUi;
+
+    @Autowired
+    private FiltersView filtersView;
+
     @Override
     public void handleNavigation(ViewChangeListener.ViewChangeEvent event, EventsView view) {
         List<String> parameters = ParametersUtil.resolve(event);
@@ -42,19 +54,21 @@ public class EventsPresenter implements Presenter<EventsView> {
         if (optionalFormatterConfig.isPresent()) {
             LogFormatter formatter = new LogFormatter(optionalFormatterConfig.get());
             List<EventDto> events = reportService.getReport(reportId).getEvents().stream()
-                    .map(eventEntity -> new EventDto(eventEntity))
+                    .map(EventDto::new)
                     .collect(Collectors.toList());
 
             String formattedLog = formatter.format(events).stream()
                     .collect(Collectors.joining("\r\n"));
             view.setLog(formattedLog);
-        } else {
 
+            filtersPresenter.initView(filtersView, events);
+        } else {
+            // TODO
         }
     }
 
     @Override
     public void initView(EventsView view) {
-
+        view.addOnFiltersButtonClick(event -> mainUi.addWindow(filtersView));
     }
 }
