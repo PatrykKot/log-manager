@@ -9,7 +9,11 @@ import com.vaadin.ui.declarative.Design;
 @DesignRoot
 public class EventsViewDesign extends VerticalLayout {
     protected TextArea eventsTextArea;
+
     protected Button filtersButton;
+
+    protected Button downloadLogFileButton;
+
     public EventsViewDesign() {
         Design.read(this);
     }

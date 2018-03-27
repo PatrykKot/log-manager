@@ -1,10 +1,13 @@
 <vaadin-vertical-layout size-full>
     <vaadin-horizontal-layout width-full>
         <vaadin-label height="15px">Events</vaadin-label>
-        <vaadin-button _id="filtersButton" :right>Filters</vaadin-button>
+        <vaadin-horizontal-layout :right>
+            <vaadin-button _id="filtersButton">Filters</vaadin-button>
+            <vaadin-button _id="downloadLogFileButton">Download</vaadin-button>
+        </vaadin-horizontal-layout>
     </vaadin-horizontal-layout>
     <vaadin-panel size-full :expand>
-        <vaadin-text-area _id="eventsTextArea" readonly size-full style-name="log-area"
-                          word-wrap="false"></vaadin-text-area>
+        <vaadin-text-area _id="eventsTextArea" readonly size-full style-name="log-area" word-wrap="false">
+        </vaadin-text-area>
     </vaadin-panel>
 </vaadin-vertical-layout>

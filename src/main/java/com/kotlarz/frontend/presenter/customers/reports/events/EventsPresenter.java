@@ -1,6 +1,7 @@
 package com.kotlarz.frontend.presenter.customers.reports.events;
 
 import com.kotlarz.backend.domain.FormatterConfigEntity;
+import com.kotlarz.backend.domain.ReportEntity;
 import com.kotlarz.backend.service.CustomerService;
 import com.kotlarz.backend.service.ReportService;
 import com.kotlarz.frontend.dto.EventDto;
@@ -17,6 +18,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,17 +51,31 @@ public class EventsPresenter implements Presenter<EventsView> {
         Long reportId = Long.parseLong(parameters.get(REPORT_ID_INDEX));
         Long customerId = Long.parseLong(parameters.get(ReportsPresenter.CUSTOMER_ID_INDEX));
 
-        List<EventDto> events = reportService.getReport(reportId).getEvents().stream()
+        Optional<ReportEntity> optionalReport = reportService.getReport(reportId);
+        if (optionalReport.isPresent()) {
+            ReportEntity report = optionalReport.get();
+            view.setDownloadFilename(generateFileName(report.getDate(), report.getCustomer().getName()));
+
+            Optional<FormatterConfigEntity> optionalFormatterConfig = customerService.getFormatterConfig(customerId);
+            if (optionalFormatterConfig.isPresent()) {
+                LogFormatter formatter = new LogFormatter(optionalFormatterConfig.get());
+                List<EventDto> events = convertEvents(report);
+                setLogs(formatter, events, view);
+                initFilters(view, events, formatter);
+            } else {
+                // TODO
+            }
+        }
+    }
+
+    private List<EventDto> convertEvents(ReportEntity report) {
+        return report.getEvents().stream()
                 .map(EventDto::new)
                 .collect(Collectors.toList());
+    }
 
-        Optional<FormatterConfigEntity> optionalFormatterConfig = customerService.getFormatterConfig(customerId);
-        if (optionalFormatterConfig.isPresent()) {
-            LogFormatter formatter = new LogFormatter(optionalFormatterConfig.get());
-            setLogs(formatter, events, view);
-            initFilters(view, events, formatter);
-        } else {
-        }
+    private String generateFileName(Date reportDate, String customerName) {
+        return customerName + "_" + reportDate.getTime() + ".log";
     }
 
     @Override
@@ -68,10 +84,7 @@ public class EventsPresenter implements Presenter<EventsView> {
     }
 
     private void initFilters(EventsView view, List<EventDto> events, LogFormatter formatter) {
-        filtersPresenter.setOnFilterUpdated(filtered -> {
-            setLogs(formatter, filtered, view);
-        });
-
+        filtersPresenter.setOnFilterUpdated(filtered -> setLogs(formatter, filtered, view));
         filtersPresenter.initView(filtersView, events);
     }
 
@@ -80,4 +93,5 @@ public class EventsPresenter implements Presenter<EventsView> {
                 .collect(Collectors.joining("\r\n"));
         view.setLog(log);
     }
+
 }

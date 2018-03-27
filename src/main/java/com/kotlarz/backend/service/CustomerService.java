@@ -85,6 +85,11 @@ public class CustomerService {
     }
 
     @Transactional
+    public Optional<CustomerEntity> getCustomer(Long id) {
+        return Optional.ofNullable(customerRepository.getOne(id));
+    }
+
+    @Transactional
     public List<CustomerEntity> getCustomers() {
         return customerRepository.findAll();
     }
