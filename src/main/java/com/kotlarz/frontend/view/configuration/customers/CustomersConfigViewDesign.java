@@ -1,12 +1,12 @@
-package com.kotlarz.frontend.view.configuration;
+package com.kotlarz.frontend.view.configuration.customers;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 
 @DesignRoot
-public class ConfigurationViewDesign extends VerticalLayout {
-    public ConfigurationViewDesign() {
+public class CustomersConfigViewDesign extends VerticalLayout {
+    public CustomersConfigViewDesign() {
         Design.read(this);
     }
 }
