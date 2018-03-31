@@ -3,6 +3,7 @@ package com.kotlarz.frontend.ui;
 import com.kotlarz.frontend.view.dashboard.Dashboard;
 import com.kotlarz.frontend.view.main.MainView;
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @SpringUI
 @Theme("apptheme")
+@Title( "Crashed" )
 @PushStateNavigation
 public class MainUI
         extends UI {
