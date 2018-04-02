@@ -36,6 +36,7 @@ public class CustomerService {
         LongStream.range(0, 10).forEach(clientId -> {
             CustomerEntity customer = CustomerEntity.builder()
                     .name(textGenerator.getName())
+                    .clearLogsAfterDays(40L)
                     .reports(mockLogReports())
                     .build();
 

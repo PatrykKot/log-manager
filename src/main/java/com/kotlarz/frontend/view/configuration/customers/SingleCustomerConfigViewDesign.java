@@ -5,8 +5,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 
 @DesignRoot
-public class CustomersConfigViewDesign extends VerticalLayout {
-    public CustomersConfigViewDesign() {
+public class SingleCustomerConfigViewDesign extends VerticalLayout {
+    public SingleCustomerConfigViewDesign() {
         Design.read(this);
     }
 }

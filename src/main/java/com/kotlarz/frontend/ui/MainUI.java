@@ -10,16 +10,18 @@ import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.UI;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
-@SpringUI
 @Theme("apptheme")
-@Title( "Crashed" )
+@Title("Crashed")
 @PushStateNavigation
+@SpringUI(path = MainUI.UI_PATH)
 public class MainUI
         extends UI {
+    public static final String UI_PATH = "crashed";
 
     @Autowired
     private MainView mainViewDisplay;
@@ -32,7 +34,8 @@ public class MainUI
         setContent(mainViewDisplay);
 
         HttpServletRequest httpServletRequest = ((VaadinServletRequest) request).getHttpServletRequest();
-        if (httpServletRequest.getRequestURI().equals("/")) {
+
+        if (httpServletRequest.getRequestURI().replace("/", StringUtils.EMPTY).equals(UI_PATH)) {
             navigator.navigateTo(Dashboard.NAME);
         }
     }

@@ -1,7 +1,7 @@
-package com.kotlarz.frontend.view.customers;
+package com.kotlarz.frontend.view.configuration.customers;
 
 import com.kotlarz.frontend.dto.CustomerDto;
-import com.kotlarz.frontend.presenter.customers.CustomersPresenter;
+import com.kotlarz.frontend.presenter.configuration.customers.CustomersGridConfigPresenter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@SpringView(name = CustomersView.NAME)
+@SpringView(name = CustomersGridConfigView.NAME)
 @UIScope
-public class CustomersView extends CustomersViewDesign implements View {
-    public static final String NAME = "customers";
+public class CustomersGridConfigView extends CustomersGridConfigViewDesign implements View {
+    public static final String NAME = "configuration/customers";
 
     @Autowired
-    private CustomersPresenter presenter;
+    private CustomersGridConfigPresenter presenter;
 
     @Setter
     private Consumer<ViewChangeListener.ViewChangeEvent> onEnterEvent;

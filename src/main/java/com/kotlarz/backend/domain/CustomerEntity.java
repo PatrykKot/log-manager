@@ -23,6 +23,12 @@ public class CustomerEntity {
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private FormatterConfigEntity formatter;
 
+    @Column(nullable = false)
+    private Long clearLogsAfterDays;
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReportEntity> reports;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CustomerTokenEntity> tokens;
 }
