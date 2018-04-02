@@ -39,7 +39,6 @@ public class PathBuilder {
     }
 
     public String build() {
-        parameters.add(0, viewName);
-        return ParametersUtil.createPath(parameters.toArray());
+        return ParametersUtil.createPath( viewName, parameters.toArray() );
     }
 }

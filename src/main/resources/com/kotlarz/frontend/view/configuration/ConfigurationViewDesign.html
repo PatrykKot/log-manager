@@ -1,20 +1,7 @@
 <vaadin-vertical-layout size-full style-name="configuration">
-    <vaadin-grid size-full header-visible="false">
-        <table>
-            <colgroup>
-                <col column-id="config"/>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th>Customers</th>
-            </tr>
-            <tr>
-                <th>Users</th>
-            </tr>
-            <tr>
-                <th>System configuration</th>
-            </tr>
-            </tbody>
-        </table>
-    </vaadin-grid>
+    <vaadin-vertical-layout width-full>
+        <vaadin-button width-full _id="customersButton">Customers</vaadin-button>
+        <vaadin-button width-full _id="usersButton">Users</vaadin-button>
+        <vaadin-button width-full _id="systemConfigurationButton">System configuration</vaadin-button>
+    </vaadin-vertical-layout>
 </vaadin-vertical-layout>
