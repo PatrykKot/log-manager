@@ -6,6 +6,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.Button;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,5 +50,9 @@ public class CustomersGridConfigView extends CustomersGridConfigViewDesign imple
 
     public void setCustomers(List<CustomerDto> customers) {
         customersGrid.setItems(customers);
+    }
+
+    public void addOnAddNewCustomerButtonClick(Button.ClickListener listener) {
+        addCustomerButton.addClickListener(listener);
     }
 }

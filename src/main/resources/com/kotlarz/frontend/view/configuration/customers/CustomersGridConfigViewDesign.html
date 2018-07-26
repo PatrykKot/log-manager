@@ -1,5 +1,11 @@
 <vaadin-vertical-layout size-full>
-    <vaadin-label height="15px">Customers configuration</vaadin-label>
+    <vaadin-horizontal-layout width-full>
+        <vaadin-label height="15px">Customers configuration</vaadin-label>
+        <vaadin-horizontal-layout :right>
+            <vaadin-button _id="addCustomerButton">Add customer</vaadin-button>
+        </vaadin-horizontal-layout>
+    </vaadin-horizontal-layout>
+
     <vaadin-panel size-full :expand>
         <vaadin-grid _id="customersGrid" size-full></vaadin-grid>
     </vaadin-panel>

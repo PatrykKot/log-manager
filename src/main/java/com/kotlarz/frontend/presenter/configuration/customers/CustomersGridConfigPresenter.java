@@ -3,8 +3,10 @@ package com.kotlarz.frontend.presenter.configuration.customers;
 import com.kotlarz.backend.service.CustomerService;
 import com.kotlarz.frontend.dto.CustomerDto;
 import com.kotlarz.frontend.presenter.Presenter;
+import com.kotlarz.frontend.ui.MainUI;
 import com.kotlarz.frontend.util.ParametersUtil;
 import com.kotlarz.frontend.view.configuration.customers.CustomersGridConfigView;
+import com.kotlarz.frontend.view.configuration.customers.single.SingleCustomerConfigView;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,12 @@ import java.util.stream.Collectors;
 public class CustomersGridConfigPresenter implements Presenter<CustomersGridConfigView> {
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private MainUI mainUI;
+
+    @Autowired
+    private SingleCustomerConfigView singleCustomerConfigView;
 
     @Override
     public void initView(CustomersGridConfigView view) {
@@ -39,5 +47,9 @@ public class CustomersGridConfigPresenter implements Presenter<CustomersGridConf
                 .map(CustomerDto::new)
                 .collect(Collectors.toList());
         view.setCustomers(customers);
+    }
+
+    private void initCustomerButton(CustomersGridConfigView view) {
+        view.addOnAddNewCustomerButtonClick(event -> mainUI.addWindow(singleCustomerConfigView));
     }
 }
