@@ -6,7 +6,8 @@ import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.ui.MainUI;
 import com.kotlarz.frontend.util.ParametersUtil;
 import com.kotlarz.frontend.view.configuration.customers.CustomersGridConfigView;
-import com.kotlarz.frontend.view.configuration.customers.single.SingleCustomerConfigView;
+import com.kotlarz.frontend.view.configuration.customers.single.CreateCustomerView;
+import com.kotlarz.frontend.view.configuration.customers.single.EditCustomerView;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import java.util.stream.Collectors;
 
 @SpringComponent
 @UIScope
-public class CustomersGridConfigPresenter implements Presenter<CustomersGridConfigView> {
+public class CustomersGridConfigPresenter
+                implements Presenter<CustomersGridConfigView>
+{
     @Autowired
     private CustomerService customerService;
 
@@ -24,32 +27,43 @@ public class CustomersGridConfigPresenter implements Presenter<CustomersGridConf
     private MainUI mainUI;
 
     @Autowired
-    private SingleCustomerConfigView singleCustomerConfigView;
+    private EditCustomerView editCustomerView;
+
+    @Autowired
+    private CreateCustomerView createCustomerView;
 
     @Override
-    public void initView(CustomersGridConfigView view) {
-        view.setOnEnterEvent(event -> {
-            List<String> parameters = ParametersUtil.resolve(event);
-            if (parameters.isEmpty()) {
-                init(view);
-            } else {
-                throw new IllegalArgumentException("Not implemented yet");
+    public void initView( CustomersGridConfigView view )
+    {
+        view.setOnEnterEvent( event -> {
+            List<String> parameters = ParametersUtil.resolve( event );
+            if ( parameters.isEmpty() )
+            {
+                init( view );
             }
-        });
+            else
+            {
+                throw new IllegalArgumentException( "Not implemented yet" );
+            }
+        } );
     }
 
-    private void init(CustomersGridConfigView view) {
-        initCustomersGrid(view);
+    private void init( CustomersGridConfigView view )
+    {
+        initCustomersGrid( view );
+        initCustomerButton( view );
     }
 
-    private void initCustomersGrid(CustomersGridConfigView view) {
+    private void initCustomersGrid( CustomersGridConfigView view )
+    {
         List<CustomerDto> customers = customerService.getCustomers().stream()
-                .map(CustomerDto::new)
-                .collect(Collectors.toList());
-        view.setCustomers(customers);
+                        .map( CustomerDto::new )
+                        .collect( Collectors.toList() );
+        view.setCustomers( customers );
     }
 
-    private void initCustomerButton(CustomersGridConfigView view) {
-        view.addOnAddNewCustomerButtonClick(event -> mainUI.addWindow(singleCustomerConfigView));
+    private void initCustomerButton( CustomersGridConfigView view )
+    {
+        view.addOnAddNewCustomerButtonClick( event -> mainUI.addWindow( createCustomerView ) );
     }
 }
