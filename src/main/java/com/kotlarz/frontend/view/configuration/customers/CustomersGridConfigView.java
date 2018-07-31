@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 @SpringView(name = CustomersGridConfigView.NAME)
@@ -27,15 +26,16 @@ public class CustomersGridConfigView extends CustomersGridConfigViewDesign imple
     private Consumer<ViewChangeListener.ViewChangeEvent> onEnterEvent;
 
     @Setter
-    private Consumer<CustomerDto> onCustomerSelected;
+    private Consumer<CustomerDto> onCustomerDoubleClicked;
 
     @PostConstruct
     private void init() {
         customersGrid.addColumn(CustomerDto::getName).setCaption("Name");
-        customersGrid.addSelectionListener(selection -> {
-            if (onCustomerSelected != null) {
-                Optional<CustomerDto> firstSelectedItem = selection.getFirstSelectedItem();
-                firstSelectedItem.ifPresent(customerDto -> onCustomerSelected.accept(customerDto));
+        customersGrid.addItemClickListener(event -> {
+            boolean doubleClick = event.getMouseEventDetails().isDoubleClick();
+            if (doubleClick) {
+                CustomerDto selectedItem = event.getItem();
+                onCustomerDoubleClicked.accept(selectedItem);
             }
         });
 

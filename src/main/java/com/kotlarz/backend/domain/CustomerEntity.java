@@ -19,12 +19,12 @@ public class CustomerEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false)
+    private Long clearLogsAfterDays;
+
     @JoinColumn(name = "formatterid")
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private FormatterConfigEntity formatter;
-
-    @Column(nullable = false)
-    private Long clearLogsAfterDays;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReportEntity> reports;

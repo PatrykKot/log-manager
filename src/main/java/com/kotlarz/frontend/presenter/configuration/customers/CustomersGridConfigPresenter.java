@@ -18,8 +18,7 @@ import java.util.stream.Collectors;
 @SpringComponent
 @UIScope
 public class CustomersGridConfigPresenter
-                implements Presenter<CustomersGridConfigView>
-{
+        implements Presenter<CustomersGridConfigView> {
     @Autowired
     private CustomerService customerService;
 
@@ -33,37 +32,34 @@ public class CustomersGridConfigPresenter
     private CreateCustomerView createCustomerView;
 
     @Override
-    public void initView( CustomersGridConfigView view )
-    {
-        view.setOnEnterEvent( event -> {
-            List<String> parameters = ParametersUtil.resolve( event );
-            if ( parameters.isEmpty() )
-            {
-                init( view );
+    public void initView(CustomersGridConfigView view) {
+        view.setOnEnterEvent(event -> {
+            List<String> parameters = ParametersUtil.resolve(event);
+            if (parameters.isEmpty()) {
+                init(view);
+            } else {
+                throw new IllegalArgumentException("Not implemented yet");
             }
-            else
-            {
-                throw new IllegalArgumentException( "Not implemented yet" );
-            }
-        } );
+        });
     }
 
-    private void init( CustomersGridConfigView view )
-    {
-        initCustomersGrid( view );
-        initCustomerButton( view );
+    private void init(CustomersGridConfigView view) {
+        initCustomersGrid(view);
+        initAddCustomerButton(view);
     }
 
-    private void initCustomersGrid( CustomersGridConfigView view )
-    {
+    private void initCustomersGrid(CustomersGridConfigView view) {
         List<CustomerDto> customers = customerService.getCustomers().stream()
-                        .map( CustomerDto::new )
-                        .collect( Collectors.toList() );
-        view.setCustomers( customers );
+                .map(CustomerDto::new)
+                .collect(Collectors.toList());
+        view.setCustomers(customers);
+        view.setOnCustomerDoubleClicked(customerDto -> {
+            mainUI.addWindow(editCustomerView);
+            editCustomerView.readBean(customerDto);
+        });
     }
 
-    private void initCustomerButton( CustomersGridConfigView view )
-    {
-        view.addOnAddNewCustomerButtonClick( event -> mainUI.addWindow( createCustomerView ) );
+    private void initAddCustomerButton(CustomersGridConfigView view) {
+        view.addOnAddNewCustomerButtonClick(event -> mainUI.addWindow(createCustomerView));
     }
 }
