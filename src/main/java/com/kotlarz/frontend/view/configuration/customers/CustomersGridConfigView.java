@@ -26,17 +26,14 @@ public class CustomersGridConfigView extends CustomersGridConfigViewDesign imple
     private Consumer<ViewChangeListener.ViewChangeEvent> onEnterEvent;
 
     @Setter
-    private Consumer<CustomerDto> onCustomerDoubleClicked;
+    private Consumer<CustomerDto> onCustomerClicked;
 
     @PostConstruct
     private void init() {
         customersGrid.addColumn(CustomerDto::getName).setCaption("Name");
         customersGrid.addItemClickListener(event -> {
-            boolean doubleClick = event.getMouseEventDetails().isDoubleClick();
-            if (doubleClick) {
-                CustomerDto selectedItem = event.getItem();
-                onCustomerDoubleClicked.accept(selectedItem);
-            }
+            CustomerDto selectedItem = event.getItem();
+            onCustomerClicked.accept(selectedItem);
         });
 
         presenter.initView(this);

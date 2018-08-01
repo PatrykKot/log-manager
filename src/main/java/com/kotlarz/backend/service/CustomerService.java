@@ -59,4 +59,15 @@ public class CustomerService {
     public Optional<FormatterConfigEntity> getFormatterConfig(Long customerId) {
         return Optional.ofNullable(formatterConfigRepository.findByCustomer_Id(customerId));
     }
+
+    @Transactional
+    public void create(CustomerEntity entity) {
+        customerRepository.save(entity);
+    }
+
+    @Transactional
+    public void update(CustomerEntity entity) {
+        // TODO
+        customerRepository.save(entity);
+    }
 }

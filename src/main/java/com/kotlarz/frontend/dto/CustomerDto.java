@@ -1,9 +1,12 @@
 package com.kotlarz.frontend.dto;
 
 import com.kotlarz.backend.domain.CustomerEntity;
+import com.kotlarz.backend.domain.FormatterConfigEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CustomerDto {
     private Long id;
 
@@ -21,5 +24,17 @@ public class CustomerDto {
         pattern = domain.getFormatter().getPattern();
         clearLogsAfterDays = domain.getClearLogsAfterDays();
         fillPattern = domain.getFormatter().getFill();
+    }
+
+    public CustomerEntity toEntity() {
+        return CustomerEntity.builder()
+                .id(id)
+                .name(name)
+                .clearLogsAfterDays(clearLogsAfterDays)
+                .formatter(FormatterConfigEntity.builder()
+                        .fill(fillPattern)
+                        .pattern(pattern)
+                        .build())
+                .build();
     }
 }
