@@ -5,6 +5,7 @@ import com.kotlarz.backend.domain.FormatterConfigEntity;
 import com.kotlarz.backend.mock.CustomerMockService;
 import com.kotlarz.backend.repository.CustomerRepository;
 import com.kotlarz.backend.repository.FormatterConfigRepository;
+import com.kotlarz.frontend.dto.CustomerDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,8 +67,21 @@ public class CustomerService {
     }
 
     @Transactional
-    public void update(CustomerEntity entity) {
-        // TODO
-        customerRepository.save(entity);
+    public void update(CustomerDto dto) {
+        CustomerEntity toUpdate = getCustomer(dto.getId()).orElseThrow(RuntimeException::new);
+        toUpdate.setName(dto.getName());
+        toUpdate.setClearLogsAfterDays(dto.getClearLogsAfterDays());
+
+        FormatterConfigEntity formatter = toUpdate.getFormatter();
+        formatter.setFill(dto.getFillPattern());
+        formatter.setPattern(dto.getPattern());
+
+
+        customerRepository.save(toUpdate);
+    }
+
+    @Transactional
+    public void delete(Long customerId) {
+        customerRepository.delete(customerId);
     }
 }

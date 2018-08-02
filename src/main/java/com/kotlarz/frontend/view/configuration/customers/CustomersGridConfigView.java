@@ -31,6 +31,10 @@ public class CustomersGridConfigView extends CustomersGridConfigViewDesign imple
     @PostConstruct
     private void init() {
         customersGrid.addColumn(CustomerDto::getName).setCaption("Name");
+        customersGrid.addColumn(CustomerDto::getClearLogsAfterDays).setCaption("Clear after [days]");
+        customersGrid.addColumn(CustomerDto::getPattern).setCaption("Pattern");
+        customersGrid.addColumn(CustomerDto::getFillPattern).setCaption("Fill to equal spaces");
+
         customersGrid.addItemClickListener(event -> {
             CustomerDto selectedItem = event.getItem();
             onCustomerClicked.accept(selectedItem);

@@ -9,6 +9,7 @@ import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
+import java.util.function.Consumer;
 
 public abstract class SingleCustomerConfigView
         extends SingleCustomerConfigViewDesign {
@@ -68,5 +69,9 @@ public abstract class SingleCustomerConfigView
 
     public void onButtonClicked(Runnable call) {
         formButton.addClickListener(event -> call.run());
+    }
+
+    public void onDeleteButtonClicked(Consumer<CustomerDto> handler) {
+        deleteButton.addClickListener(event -> handler.accept(readCustomer));
     }
 }

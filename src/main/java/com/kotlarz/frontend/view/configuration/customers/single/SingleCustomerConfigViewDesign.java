@@ -9,8 +9,7 @@ import com.vaadin.ui.declarative.Design;
 
 @DesignRoot
 public class SingleCustomerConfigViewDesign
-                extends Window
-{
+        extends Window {
     protected TextField customerNameField;
 
     protected TextField clearLogsAfterDaysField;
@@ -21,8 +20,9 @@ public class SingleCustomerConfigViewDesign
 
     protected Button formButton;
 
-    public SingleCustomerConfigViewDesign()
-    {
-        Design.read( this );
+    protected Button deleteButton;
+
+    public SingleCustomerConfigViewDesign() {
+        Design.read(this);
     }
 }

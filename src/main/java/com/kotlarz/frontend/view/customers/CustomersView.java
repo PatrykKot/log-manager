@@ -23,19 +23,20 @@ public class CustomersView extends CustomersViewDesign implements View {
     private CustomersPresenter presenter;
 
     @Setter
-    private Consumer<ViewChangeListener.ViewChangeEvent> onEnterEvent;
+    private Consumer<ViewChangeListener.ViewChangeEvent> onEnterEvent = ($) -> {
+    };
 
     @Setter
-    private Consumer<CustomerDto> onCustomerSelected;
+    private Consumer<CustomerDto> onCustomerSelected = ($) -> {
+    };
 
     @PostConstruct
     private void init() {
         customersGrid.addColumn(CustomerDto::getName).setCaption("Name");
+
         customersGrid.addSelectionListener(selection -> {
-            if (onCustomerSelected != null) {
-                Optional<CustomerDto> firstSelectedItem = selection.getFirstSelectedItem();
-                firstSelectedItem.ifPresent(customerDto -> onCustomerSelected.accept(customerDto));
-            }
+            Optional<CustomerDto> firstSelectedItem = selection.getFirstSelectedItem();
+            firstSelectedItem.ifPresent(customerDto -> onCustomerSelected.accept(customerDto));
         });
 
         presenter.initView(this);
@@ -43,8 +44,7 @@ public class CustomersView extends CustomersViewDesign implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if (onEnterEvent != null)
-            onEnterEvent.accept(event);
+        onEnterEvent.accept(event);
     }
 
     public void setCustomers(List<CustomerDto> customers) {

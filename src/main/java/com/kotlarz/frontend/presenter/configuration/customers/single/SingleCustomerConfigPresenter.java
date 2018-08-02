@@ -36,8 +36,15 @@ public class SingleCustomerConfigPresenter {
     public void init(EditCustomerView editCustomerView) {
         init(editCustomerView, customerDto -> {
             customerDto.setId(editCustomerView.getReadCustomer().getId());
-            customerService.update(customerDto.toEntity());
+            customerService.update(customerDto);
             Notification.show("Customer " + customerDto.getName() + " updated.");
+        });
+
+        editCustomerView.onDeleteButtonClicked(customerDto -> {
+            customerService.delete(customerDto.getId());
+            Notification.show("Customer " + customerDto.getName() + " deleted.");
+            editCustomerView.close();
+            onConfigFinished.run();
         });
     }
 

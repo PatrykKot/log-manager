@@ -13,10 +13,11 @@ public class PositiveIntegerValidator extends AbstractValidator<String> {
 
     @Override
     public ValidationResult apply(String value, ValueContext context) {
-        boolean ok = true;
+        boolean ok;
 
         try {
-            Long.parseLong(value);
+            long parsed = Long.parseLong(value);
+            ok = parsed > 0;
         } catch (Exception ex) {
             ok = false;
         }
