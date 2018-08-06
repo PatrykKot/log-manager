@@ -1,4 +1,4 @@
-package com.kotlarz.backend.domain;
+package com.kotlarz.backend.domain.logs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

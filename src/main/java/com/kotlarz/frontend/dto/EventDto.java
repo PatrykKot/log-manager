@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.dto;
 
-import com.kotlarz.backend.domain.EventEntity;
+import com.kotlarz.backend.domain.logs.EventEntity;
 import lombok.Data;
 
 import java.util.Date;

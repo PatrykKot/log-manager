@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.presenter.configuration.customers.single;
 
-import com.kotlarz.backend.service.CustomerService;
+import com.kotlarz.backend.service.logs.CustomerService;
 import com.kotlarz.frontend.dto.CustomerDto;
 import com.kotlarz.frontend.view.configuration.customers.single.CreateCustomerView;
 import com.kotlarz.frontend.view.configuration.customers.single.EditCustomerView;

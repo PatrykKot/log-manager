@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.presenter.customers.reports;
 
-import com.kotlarz.backend.service.ReportService;
+import com.kotlarz.backend.service.logs.ReportService;
 import com.kotlarz.frontend.dto.ReportDto;
 import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.presenter.customers.reports.events.EventsPresenter;

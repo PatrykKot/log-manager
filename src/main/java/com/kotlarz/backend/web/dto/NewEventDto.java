@@ -1,6 +1,6 @@
 package com.kotlarz.backend.web.dto;
 
-import com.kotlarz.backend.domain.EventEntity;
+import com.kotlarz.backend.domain.logs.EventEntity;
 import lombok.Data;
 
 import java.nio.charset.StandardCharsets;

@@ -1,10 +1,10 @@
-package com.kotlarz.backend.service;
+package com.kotlarz.backend.service.logs;
 
-import com.kotlarz.backend.domain.CustomerEntity;
-import com.kotlarz.backend.domain.FormatterConfigEntity;
+import com.kotlarz.backend.domain.logs.CustomerEntity;
+import com.kotlarz.backend.domain.logs.FormatterConfigEntity;
 import com.kotlarz.backend.mock.CustomerMockService;
-import com.kotlarz.backend.repository.CustomerRepository;
-import com.kotlarz.backend.repository.FormatterConfigRepository;
+import com.kotlarz.backend.repository.logs.CustomerRepository;
+import com.kotlarz.backend.repository.logs.FormatterConfigRepository;
 import com.kotlarz.frontend.dto.CustomerDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

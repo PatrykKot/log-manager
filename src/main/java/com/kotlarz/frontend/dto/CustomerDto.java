@@ -1,7 +1,7 @@
 package com.kotlarz.frontend.dto;
 
-import com.kotlarz.backend.domain.CustomerEntity;
-import com.kotlarz.backend.domain.FormatterConfigEntity;
+import com.kotlarz.backend.domain.logs.CustomerEntity;
+import com.kotlarz.backend.domain.logs.FormatterConfigEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,5 +1,6 @@
 package com.kotlarz.frontend.ui;
 
+import com.kotlarz.configuration.Application;
 import com.kotlarz.frontend.view.dashboard.Dashboard;
 import com.kotlarz.frontend.view.main.MainView;
 import com.vaadin.annotations.Theme;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @SpringUI(path = MainUI.UI_PATH)
 public class MainUI
         extends UI {
-    public static final String UI_PATH = "crashed";
+    public static final String UI_PATH = Application.APP_URL;
 
     @Autowired
     private MainView mainViewDisplay;

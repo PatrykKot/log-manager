@@ -1,8 +1,8 @@
 package com.kotlarz.backend.mock;
 
-import com.kotlarz.backend.domain.CustomerEntity;
-import com.kotlarz.backend.domain.EventEntity;
-import com.kotlarz.backend.domain.ReportEntity;
+import com.kotlarz.backend.domain.logs.CustomerEntity;
+import com.kotlarz.backend.domain.logs.EventEntity;
+import com.kotlarz.backend.domain.logs.ReportEntity;
 import com.thedeanda.lorem.LoremIpsum;
 import org.springframework.stereotype.Service;
 

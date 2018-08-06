@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan( "com.kotlarz" )
 public class Application
 {
+    public static final String APP_URL = "/crashed";
+
     public static void main( String[] args )
     {
         SpringApplication.run( Application.class );
