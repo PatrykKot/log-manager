@@ -1,6 +1,7 @@
 package com.kotlarz.frontend.view.main;
 
 import com.kotlarz.frontend.presenter.MainPresenter;
+import com.kotlarz.frontend.view.login.Login;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.spring.annotation.SpringViewDisplay;
@@ -23,6 +24,10 @@ public class MainView extends MainViewDesign implements ViewDisplay {
 
     @Override
     public void showView(View view) {
-        contentPanel.setContent(view.getViewComponent());
+        if (view instanceof Login) {
+            // TODO secure
+        } else {
+            contentPanel.setContent(view.getViewComponent());
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.kotlarz.frontend.ui;
 
 import com.kotlarz.configuration.Application;
+import com.kotlarz.configuration.security.SecurityUtils;
 import com.kotlarz.frontend.view.dashboard.Dashboard;
+import com.kotlarz.frontend.view.login.Login;
 import com.kotlarz.frontend.view.main.MainView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -37,7 +39,11 @@ public class MainUI
         HttpServletRequest httpServletRequest = ((VaadinServletRequest) request).getHttpServletRequest();
 
         if (httpServletRequest.getRequestURI().replace("/", StringUtils.EMPTY).equals(UI_PATH)) {
-            navigator.navigateTo(Dashboard.NAME);
+            if (!SecurityUtils.isLoggedIn()) {
+                navigator.navigateTo(Login.NAME);
+            } else {
+                navigator.navigateTo(Dashboard.NAME);
+            }
         }
     }
 }
