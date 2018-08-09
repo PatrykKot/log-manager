@@ -6,12 +6,12 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.Button;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 @SpringView(name = CustomersGridConfigView.NAME)
@@ -26,16 +26,18 @@ public class CustomersGridConfigView extends CustomersGridConfigViewDesign imple
     private Consumer<ViewChangeListener.ViewChangeEvent> onEnterEvent;
 
     @Setter
-    private Consumer<CustomerDto> onCustomerSelected;
+    private Consumer<CustomerDto> onCustomerClicked;
 
     @PostConstruct
     private void init() {
         customersGrid.addColumn(CustomerDto::getName).setCaption("Name");
-        customersGrid.addSelectionListener(selection -> {
-            if (onCustomerSelected != null) {
-                Optional<CustomerDto> firstSelectedItem = selection.getFirstSelectedItem();
-                firstSelectedItem.ifPresent(customerDto -> onCustomerSelected.accept(customerDto));
-            }
+        customersGrid.addColumn(CustomerDto::getClearLogsAfterDays).setCaption("Clear after [days]");
+        customersGrid.addColumn(CustomerDto::getPattern).setCaption("Pattern");
+        customersGrid.addColumn(CustomerDto::getFillPattern).setCaption("Fill to equal spaces");
+
+        customersGrid.addItemClickListener(event -> {
+            CustomerDto selectedItem = event.getItem();
+            onCustomerClicked.accept(selectedItem);
         });
 
         presenter.initView(this);
@@ -49,5 +51,9 @@ public class CustomersGridConfigView extends CustomersGridConfigViewDesign imple
 
     public void setCustomers(List<CustomerDto> customers) {
         customersGrid.setItems(customers);
+    }
+
+    public void addOnAddNewCustomerButtonClick(Button.ClickListener listener) {
+        addCustomerButton.addClickListener(listener);
     }
 }

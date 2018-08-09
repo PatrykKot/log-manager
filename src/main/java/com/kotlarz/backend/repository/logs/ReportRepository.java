@@ -1,6 +1,6 @@
-package com.kotlarz.backend.repository;
+package com.kotlarz.backend.repository.logs;
 
-import com.kotlarz.backend.domain.ReportEntity;
+import com.kotlarz.backend.domain.logs.ReportEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

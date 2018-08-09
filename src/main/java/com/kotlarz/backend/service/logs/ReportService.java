@@ -1,10 +1,10 @@
-package com.kotlarz.backend.service;
+package com.kotlarz.backend.service.logs;
 
-import com.kotlarz.backend.domain.CustomerEntity;
-import com.kotlarz.backend.domain.CustomerTokenEntity;
-import com.kotlarz.backend.domain.ReportEntity;
-import com.kotlarz.backend.repository.CustomerTokenRepository;
-import com.kotlarz.backend.repository.ReportRepository;
+import com.kotlarz.backend.domain.logs.CustomerEntity;
+import com.kotlarz.backend.domain.logs.CustomerTokenEntity;
+import com.kotlarz.backend.domain.logs.ReportEntity;
+import com.kotlarz.backend.repository.logs.CustomerTokenRepository;
+import com.kotlarz.backend.repository.logs.ReportRepository;
 import com.kotlarz.backend.web.dto.NewEventDto;
 import com.kotlarz.backend.web.dto.NewReportDto;
 import lombok.extern.slf4j.Slf4j;

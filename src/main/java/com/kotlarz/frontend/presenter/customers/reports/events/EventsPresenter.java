@@ -1,9 +1,9 @@
 package com.kotlarz.frontend.presenter.customers.reports.events;
 
-import com.kotlarz.backend.domain.FormatterConfigEntity;
-import com.kotlarz.backend.domain.ReportEntity;
-import com.kotlarz.backend.service.CustomerService;
-import com.kotlarz.backend.service.ReportService;
+import com.kotlarz.backend.domain.logs.FormatterConfigEntity;
+import com.kotlarz.backend.domain.logs.ReportEntity;
+import com.kotlarz.backend.service.logs.CustomerService;
+import com.kotlarz.backend.service.logs.ReportService;
 import com.kotlarz.frontend.dto.EventDto;
 import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.presenter.customers.reports.ReportsPresenter;

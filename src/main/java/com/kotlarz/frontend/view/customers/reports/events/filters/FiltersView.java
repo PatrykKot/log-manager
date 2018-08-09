@@ -4,17 +4,12 @@ import com.kotlarz.frontend.dto.EventFilter;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.function.Consumer;
 
 @SpringComponent
 @UIScope
 public class FiltersView extends FiltersViewDesign {
-    @PostConstruct
-    private void init() {
-    }
-
     public void setThreadItems(List<String> threads) {
         threadCombo.setItems(threads);
     }

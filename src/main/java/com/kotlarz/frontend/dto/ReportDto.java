@@ -1,13 +1,9 @@
 package com.kotlarz.frontend.dto;
 
-import com.kotlarz.backend.domain.ReportEntity;
+import com.kotlarz.backend.domain.logs.ReportEntity;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class ReportDto {

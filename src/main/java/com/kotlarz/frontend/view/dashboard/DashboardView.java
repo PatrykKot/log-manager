@@ -6,9 +6,12 @@ import com.vaadin.spring.annotation.UIScope;
 
 import javax.annotation.PostConstruct;
 
-@SpringView(name = Dashboard.NAME)
+@SpringView( name = DashboardView.NAME )
 @UIScope
-public class Dashboard extends DashboardViewDesign implements View {
+public class DashboardView
+                extends DashboardViewDesign
+                implements View
+{
     public static final String NAME = "dashboard";
 
     @PostConstruct

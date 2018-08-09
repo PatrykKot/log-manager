@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.util;
 
-import com.kotlarz.backend.domain.FormatterConfigEntity;
+import com.kotlarz.backend.domain.logs.FormatterConfigEntity;
 import com.kotlarz.backend.formatter.FormatPhrase;
 import com.kotlarz.frontend.dto.EventDto;
 import org.apache.commons.lang3.StringUtils;

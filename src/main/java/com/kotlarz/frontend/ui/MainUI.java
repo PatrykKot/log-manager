@@ -1,6 +1,9 @@
 package com.kotlarz.frontend.ui;
 
-import com.kotlarz.frontend.view.dashboard.Dashboard;
+import com.kotlarz.configuration.Application;
+import com.kotlarz.configuration.security.SecurityUtils;
+import com.kotlarz.frontend.view.dashboard.DashboardView;
+import com.kotlarz.frontend.view.login.LoginView;
 import com.kotlarz.frontend.view.main.MainView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -15,13 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Theme("apptheme")
-@Title("Crashed")
+@Theme( "apptheme" )
+@Title( "Crashed" )
 @PushStateNavigation
-@SpringUI(path = MainUI.UI_PATH)
+@SpringUI( path = MainUI.UI_PATH )
 public class MainUI
-        extends UI {
-    public static final String UI_PATH = "crashed";
+                extends UI
+{
+    public static final String UI_PATH = Application.APP_URL;
 
     @Autowired
     private MainView mainViewDisplay;
@@ -30,13 +34,22 @@ public class MainUI
     private SpringNavigator navigator;
 
     @Override
-    protected void init(VaadinRequest request) {
-        setContent(mainViewDisplay);
+    protected void init( VaadinRequest request )
+    {
+        setContent( mainViewDisplay );
 
-        HttpServletRequest httpServletRequest = ((VaadinServletRequest) request).getHttpServletRequest();
+        HttpServletRequest httpServletRequest = ( (VaadinServletRequest) request ).getHttpServletRequest();
 
-        if (httpServletRequest.getRequestURI().replace("/", StringUtils.EMPTY).equals(UI_PATH)) {
-            navigator.navigateTo(Dashboard.NAME);
+        if ( SecurityUtils.isLoggedIn() )
+        {
+            if ( httpServletRequest.getRequestURI().replace( "/", StringUtils.EMPTY ).equals( UI_PATH ) )
+            {
+                navigator.navigateTo( DashboardView.NAME );
+            }
+        }
+        else
+        {
+            navigator.navigateTo( LoginView.NAME );
         }
     }
 }

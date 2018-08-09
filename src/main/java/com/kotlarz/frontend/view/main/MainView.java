@@ -1,6 +1,7 @@
 package com.kotlarz.frontend.view.main;
 
 import com.kotlarz.frontend.presenter.MainPresenter;
+import com.kotlarz.frontend.view.login.LoginView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.spring.annotation.SpringViewDisplay;
@@ -11,7 +12,9 @@ import javax.annotation.PostConstruct;
 
 @SpringViewDisplay
 @UIScope
-public class MainView extends MainViewDesign implements ViewDisplay {
+public class MainView
+        extends MainViewDesign
+        implements ViewDisplay {
 
     @Autowired
     private MainPresenter presenter;
@@ -23,6 +26,7 @@ public class MainView extends MainViewDesign implements ViewDisplay {
 
     @Override
     public void showView(View view) {
+        menuButtonsLayout.setVisible(!(view instanceof LoginView));
         contentPanel.setContent(view.getViewComponent());
     }
 }
