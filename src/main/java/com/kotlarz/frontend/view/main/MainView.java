@@ -13,27 +13,20 @@ import javax.annotation.PostConstruct;
 @SpringViewDisplay
 @UIScope
 public class MainView
-                extends MainViewDesign
-                implements ViewDisplay
-{
+        extends MainViewDesign
+        implements ViewDisplay {
 
     @Autowired
     private MainPresenter presenter;
 
     @PostConstruct
-    private void init()
-    {
-        presenter.initView( this );
+    private void init() {
+        presenter.initView(this);
     }
 
     @Override
-    public void showView( View view )
-    {
-        if ( view instanceof LoginView )
-        {
-            // TODO hide menu
-        }
-
-        contentPanel.setContent( view.getViewComponent() );
+    public void showView(View view) {
+        menuButtonsLayout.setVisible(!(view instanceof LoginView));
+        contentPanel.setContent(view.getViewComponent());
     }
 }
