@@ -22,6 +22,6 @@ public class PositiveIntegerValidator extends AbstractValidator<String> {
             ok = false;
         }
 
-        return toResult(MESSAGE, ok);
+        return toResult(value, ok);
     }
 }

@@ -5,7 +5,6 @@ import com.kotlarz.frontend.dto.CustomerDto;
 import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.presenter.configuration.customers.single.SingleCustomerConfigPresenter;
 import com.kotlarz.frontend.ui.MainUI;
-import com.kotlarz.frontend.util.ParametersUtil;
 import com.kotlarz.frontend.view.configuration.customers.CustomersGridConfigView;
 import com.kotlarz.frontend.view.configuration.customers.single.CreateCustomerView;
 import com.kotlarz.frontend.view.configuration.customers.single.EditCustomerView;
@@ -37,14 +36,7 @@ public class CustomersGridConfigPresenter
 
     @Override
     public void initView(CustomersGridConfigView view) {
-        view.setOnEnterEvent(event -> {
-            List<String> parameters = ParametersUtil.resolve(event);
-            if (parameters.isEmpty()) {
-                init(view);
-            } else {
-                throw new IllegalArgumentException("Not implemented yet");
-            }
-        });
+        init(view);
     }
 
     private void init(CustomersGridConfigView view) {
