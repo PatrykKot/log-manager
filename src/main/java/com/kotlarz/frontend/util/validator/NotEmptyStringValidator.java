@@ -14,6 +14,6 @@ public class NotEmptyStringValidator extends AbstractValidator<String> {
 
     @Override
     public ValidationResult apply(String value, ValueContext context) {
-        return toResult(MESSAGE, StringUtils.isNotEmpty(value));
+        return toResult(value, StringUtils.isNotEmpty(value));
     }
 }

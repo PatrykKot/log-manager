@@ -1,1 +1,12 @@
-<vaadin-vertical-layout/>
+<vaadin-vertical-layout size-full>
+    <vaadin-horizontal-layout width-full>
+        <vaadin-label height="15px">Users configuration</vaadin-label>
+        <vaadin-horizontal-layout :right>
+            <vaadin-button _id="addUserButton">Add user</vaadin-button>
+        </vaadin-horizontal-layout>
+    </vaadin-horizontal-layout>
+
+    <vaadin-panel size-full :expand>
+        <vaadin-grid _id="usersGrid" size-full></vaadin-grid>
+    </vaadin-panel>
+</vaadin-vertical-layout>
