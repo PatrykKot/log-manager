@@ -4,6 +4,7 @@ import com.kotlarz.backend.domain.system.User;
 import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.repository.system.UserRepository;
 import com.kotlarz.backend.service.system.exception.UserAlreadyExistException;
+import com.kotlarz.configuration.security.SecurityService;
 import com.kotlarz.configuration.security.exception.UserNotFoundException;
 import com.kotlarz.frontend.dto.UserDto;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SecurityService securityService;
 
     @PostConstruct
     @Transactional
@@ -93,5 +97,6 @@ public class UserService {
     @Transactional
     public void delete(Long userId) {
         userRepository.delete(userId);
+        securityService.logOut(userId);
     }
 }

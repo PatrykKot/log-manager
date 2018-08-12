@@ -5,7 +5,10 @@ import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.service.system.UserService;
 import com.kotlarz.configuration.security.exception.UserIsNotLoggedInException;
 import com.kotlarz.configuration.security.exception.UserNotFoundException;
+import com.kotlarz.configuration.servlet.VaadinSessionListener;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringComponent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
+@Slf4j
 @SpringComponent
 public class SecurityService {
     @Autowired
@@ -21,6 +25,9 @@ public class SecurityService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VaadinSessionListener sessionListener;
 
     public boolean isLoggedIn() {
         return getAuthentication()
@@ -36,6 +43,10 @@ public class SecurityService {
 
     public void logOut() {
         SecurityContextHolder.clearContext();
+    }
+
+    public void logOut(Long userId) {
+        sessionListener.getSessionsForUser(userId).forEach(VaadinSession::close);
     }
 
     public User getCurrentUser() {
