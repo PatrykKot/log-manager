@@ -3,6 +3,8 @@ package com.kotlarz.backend.service.system;
 import com.kotlarz.backend.domain.system.User;
 import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.repository.system.UserRepository;
+import com.kotlarz.backend.service.system.exception.UserAlreadyExistException;
+import com.kotlarz.configuration.security.exception.UserNotFoundException;
 import com.kotlarz.frontend.dto.UserDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,6 @@ public class UserService {
                 .build());
     }
 
-
     @Transactional
     public Optional<User> getUser(Long id) {
         return Optional.ofNullable(userRepository.findOne(id));
@@ -55,8 +56,11 @@ public class UserService {
     }
 
     @Transactional
-    public void create(UserDto userDto) {
-        // TODO check the same username
+    public void create(UserDto userDto) throws UserAlreadyExistException {
+        if (findByUsername(userDto.getUsername()).isPresent()) {
+            throw new UserAlreadyExistException();
+        }
+
         User user = User.builder()
                 .username(userDto.getUsername())
                 .type(userDto.getType())
@@ -67,10 +71,17 @@ public class UserService {
     }
 
     @Transactional
-    public void update(UserDto dto) {
-        User toUpdate = getUser(dto.getId()).orElseThrow(RuntimeException::new);
-        toUpdate.setUsername(dto.getUsername());
+    public void update(UserDto dto) throws UserAlreadyExistException {
+        User toUpdate = getUser(dto.getId()).orElseThrow(UserNotFoundException::new);
         toUpdate.setType(dto.getType());
+
+        if (!toUpdate.getUsername().equals(dto.getUsername())) {
+            if (findByUsername(dto.getUsername()).isPresent()) {
+                throw new UserAlreadyExistException();
+            }
+
+            toUpdate.setUsername(dto.getUsername());
+        }
 
         if (StringUtils.isNotEmpty(dto.getRawPassword())) {
             toUpdate.setPasswordHash(passwordEncoder.encode(dto.getRawPassword()));

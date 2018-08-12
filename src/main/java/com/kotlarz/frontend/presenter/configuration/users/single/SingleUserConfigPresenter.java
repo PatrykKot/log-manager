@@ -1,6 +1,7 @@
 package com.kotlarz.frontend.presenter.configuration.users.single;
 
 import com.kotlarz.backend.service.system.UserService;
+import com.kotlarz.backend.service.system.exception.UserAlreadyExistException;
 import com.kotlarz.frontend.dto.UserDto;
 import com.kotlarz.frontend.view.configuration.users.single.EditUserView;
 import com.kotlarz.frontend.view.configuration.users.single.SingleUserConfigView;
@@ -12,7 +13,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 @SpringComponent
 @UIScope
@@ -27,16 +28,28 @@ public class SingleUserConfigPresenter {
 
     public void init(SingleUserConfigView createUserView) {
         init(createUserView, userDto -> {
-            userService.create(userDto);
-            Notification.show("User " + userDto.getUsername() + " added.");
+            try {
+                userService.create(userDto);
+                Notification.show("User " + userDto.getUsername() + " added.");
+                return true;
+            } catch (UserAlreadyExistException e) {
+                Notification.show("User " + userDto.getUsername() + " already exists");
+                return false;
+            }
         });
     }
 
     public void init(EditUserView editUserView) {
         init(editUserView, userDto -> {
             userDto.setId(editUserView.getReadUser().getId());
-            userService.update(userDto);
-            Notification.show("User " + userDto.getUsername() + " updated.");
+            try {
+                userService.update(userDto);
+                Notification.show("User " + userDto.getUsername() + " updated.");
+                return true;
+            } catch (UserAlreadyExistException e) {
+                Notification.show("User " + userDto.getUsername() + " already exists");
+                return false;
+            }
         });
 
         editUserView.onDeleteButtonClicked(userDto -> {
@@ -47,14 +60,15 @@ public class SingleUserConfigPresenter {
         });
     }
 
-    private void init(SingleUserConfigView view, Consumer<UserDto> handle) {
+    private void init(SingleUserConfigView view, Function<UserDto, Boolean> handle) {
         view.onButtonClicked(() -> {
             try {
                 UserDto userDto = new UserDto();
                 view.writeBean(userDto);
-                handle.accept(userDto);
-                view.close();
-                onConfigFinished.run();
+                if (handle.apply(userDto)) {
+                    view.close();
+                    onConfigFinished.run();
+                }
             } catch (ValidationException error) {
                 log.error(error.getMessage(), error);
             }
