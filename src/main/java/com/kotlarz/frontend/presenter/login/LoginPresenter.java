@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.presenter.login;
 
-import com.kotlarz.configuration.security.SecurityService;
+import com.kotlarz.configuration.security.service.SecurityService;
 import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.view.dashboard.DashboardView;
 import com.kotlarz.frontend.view.login.LoginView;
@@ -10,6 +10,7 @@ import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.Notification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 @Slf4j
@@ -28,7 +29,12 @@ public class LoginPresenter
     public void initView(LoginView view) {
         view.setOnLoginClick((username, password) -> {
             try {
-                securityService.logIn(username, password);
+                Authentication authentication = securityService.logIn(username, password);
+
+                if (view.isRememberMeSelected()) {
+                    securityService.rememberMe(authentication);
+                }
+
                 navigator.navigateTo(DashboardView.NAME);
             } catch (AuthenticationException ex) {
                 Notification.show("Invalid login data");

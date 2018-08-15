@@ -42,6 +42,10 @@ public class LoginView
         onEnterClicked(passwordField, action);
     }
 
+    public boolean isRememberMeSelected() {
+        return rememberMeCheckbox.getValue();
+    }
+
     private void onEnterClicked(AbstractField<?> field, Runnable handler) {
         field.addShortcutListener(new ShortcutListener(StringUtils.EMPTY, ShortcutAction.KeyCode.ENTER, null) {
             @Override

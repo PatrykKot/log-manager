@@ -1,7 +1,7 @@
 package com.kotlarz.frontend.ui;
 
 import com.kotlarz.configuration.Application;
-import com.kotlarz.configuration.security.SecurityService;
+import com.kotlarz.configuration.security.service.SecurityService;
 import com.kotlarz.frontend.view.dashboard.DashboardView;
 import com.kotlarz.frontend.view.login.LoginView;
 import com.kotlarz.frontend.view.main.MainView;
@@ -37,6 +37,10 @@ public class MainUI
 
     @Override
     protected void init(VaadinRequest request) {
+        if (!securityService.isLoggedIn()) {
+            securityService.tryAutoLogin();
+        }
+
         setContent(mainViewDisplay);
 
         HttpServletRequest httpServletRequest = ((VaadinServletRequest) request).getHttpServletRequest();

@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 public class VaadinSessionListener {
     private List<VaadinSession> sessions = new LinkedList<>();
 
-    public void register(VaadinSession session) {
+    void register(VaadinSession session) {
         sessions.add(session);
     }
 
-    public void unregister(VaadinSession session) {
+    void unregister(VaadinSession session) {
         sessions.remove(session);
     }
 
