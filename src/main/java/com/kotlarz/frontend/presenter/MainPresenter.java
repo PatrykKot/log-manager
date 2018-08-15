@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.presenter;
 
-import com.kotlarz.configuration.security.SecurityService;
+import com.kotlarz.configuration.security.service.SecurityService;
 import com.kotlarz.frontend.view.configuration.ConfigurationView;
 import com.kotlarz.frontend.view.customers.CustomersView;
 import com.kotlarz.frontend.view.dashboard.DashboardView;

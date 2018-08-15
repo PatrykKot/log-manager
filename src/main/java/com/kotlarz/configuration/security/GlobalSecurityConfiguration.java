@@ -8,41 +8,43 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableGlobalMethodSecurity( securedEnabled = true )
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class GlobalSecurityConfiguration
-                extends GlobalMethodSecurityConfiguration
-{
-    static
-    {
-        SecurityContextHolder.setStrategyName( VaadinSessionSecurityContextHolderStrategy.class.getName() );
+        extends GlobalMethodSecurityConfiguration {
+    static {
+        SecurityContextHolder.setStrategyName(VaadinSessionSecurityContextHolderStrategy.class.getName());
     }
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
-    protected void configure( AuthenticationManagerBuilder auth )
-                    throws Exception
-    {
-        super.configure( auth );
-        auth.userDetailsService( userDetailsService ).passwordEncoder( passwordEncoder() );
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        super.configure(auth);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
     public AuthenticationManager authenticationManagerBean()
-                    throws Exception
-    {
+            throws Exception {
         return authenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 }

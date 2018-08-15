@@ -28,6 +28,7 @@ public class VaadinSessionSecurityContextHolderStrategy implements SecurityConte
             context = createEmptyContext();
             session.setAttribute(SecurityContext.class, context);
         }
+
         return context;
     }
 

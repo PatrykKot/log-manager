@@ -1,5 +1,6 @@
 package com.kotlarz.backend.domain.logs;
 
+import com.kotlarz.backend.domain.system.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,4 +32,7 @@ public class CustomerEntity {
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CustomerTokenEntity> tokens;
+
+    @ManyToMany(mappedBy = "availableCustomers")
+    private List<User> permittedUsers;
 }

@@ -61,8 +61,6 @@ public class CustomersGridConfigPresenter
 
     private void initAddCustomerButton(CustomersGridConfigView view) {
         view.addOnAddNewCustomerButtonClick(event -> mainUI.addWindow(createCustomerView));
-        singleCustomerConfigPresenter.setOnConfigFinished(() -> {
-            loadCustomers(view);
-        });
+        singleCustomerConfigPresenter.setOnConfigFinished(() -> loadCustomers(view));
     }
 }

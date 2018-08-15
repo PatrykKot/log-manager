@@ -1,5 +1,6 @@
 package com.kotlarz.backend.domain.system;
 
+import com.kotlarz.backend.domain.logs.CustomerEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +31,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserType type;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "permission",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "customerId"))
+    private List<CustomerEntity> availableCustomers;
 
     public String getRole() {
         // TODO
