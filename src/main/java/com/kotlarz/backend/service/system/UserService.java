@@ -7,7 +7,9 @@ import com.kotlarz.backend.service.system.exception.UserAlreadyExistException;
 import com.kotlarz.configuration.security.exception.UserNotFoundException;
 import com.kotlarz.configuration.security.service.SecurityService;
 import com.kotlarz.frontend.dto.UserDto;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserService {
     @Autowired
@@ -50,6 +53,16 @@ public class UserService {
     }
 
     @Transactional
+    public Optional<User> getUserWithCustomers(Long id) {
+        User user = userRepository.findOne(id);
+        if (user != null) {
+            Hibernate.initialize(user.getAvailableCustomers());
+        }
+
+        return Optional.ofNullable(user);
+    }
+
+    @Transactional
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -69,6 +82,7 @@ public class UserService {
                 .username(userDto.getUsername())
                 .type(userDto.getType())
                 .passwordHash(passwordEncoder.encode(userDto.getRawPassword()))
+                // TODO customers
                 .build();
 
         userRepository.save(user);
@@ -85,6 +99,7 @@ public class UserService {
             }
 
             toUpdate.setUsername(dto.getUsername());
+            // update customers
         }
 
         if (StringUtils.isNotEmpty(dto.getRawPassword())) {

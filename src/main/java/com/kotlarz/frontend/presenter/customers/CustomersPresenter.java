@@ -1,6 +1,7 @@
 package com.kotlarz.frontend.presenter.customers;
 
 import com.kotlarz.backend.service.logs.CustomerService;
+import com.kotlarz.configuration.security.service.SecurityService;
 import com.kotlarz.frontend.dto.CustomerDto;
 import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.presenter.customers.reports.ReportsPresenter;
@@ -43,17 +44,19 @@ public class CustomersPresenter implements Presenter<CustomersView> {
     @Autowired
     private MainView mainView;
 
+    @Autowired
+    private SecurityService securityService;
+
     @Override
     public void initView(CustomersView view) {
         view.setOnEnterEvent(event -> {
             List<String> parameters = ParametersUtil.resolve(event);
             if (parameters.isEmpty()) {
                 initCustomersView(view);
-            } else if(parameters.size() == 2){
+            } else if (parameters.size() == 2) {
                 mainView.showView(reportsView);
                 reportsPresenter.handleNavigation(event, reportsView);
-            }
-            else if(parameters.size() == 4) {
+            } else if (parameters.size() == 4) {
                 mainView.showView(eventsView);
                 eventsPresenter.handleNavigation(event, eventsView);
             }
@@ -71,7 +74,9 @@ public class CustomersPresenter implements Presenter<CustomersView> {
     }
 
     private void initCustomersGrid(CustomersView view) {
-        List<CustomerDto> customers = customerService.getCustomers().stream()
+        Long userId = securityService.getCurrentUserId();
+
+        List<CustomerDto> customers = customerService.getCustomersForUser(userId).stream()
                 .map(CustomerDto::new)
                 .collect(Collectors.toList());
         view.setCustomers(customers);

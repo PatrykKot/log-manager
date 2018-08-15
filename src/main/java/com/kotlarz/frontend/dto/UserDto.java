@@ -5,6 +5,9 @@ import com.kotlarz.backend.domain.system.UserType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @NoArgsConstructor
 public class UserDto {
@@ -16,9 +19,18 @@ public class UserDto {
 
     private UserType type;
 
-    public UserDto(User domain) {
+    private List<AvailableCustomerDto> availableCustomers;
+
+    public UserDto(User domain, Boolean mapCustomers
+    ) {
         id = domain.getId();
         username = domain.getUsername();
         type = domain.getType();
+
+        if (mapCustomers) {
+            availableCustomers = domain.getAvailableCustomers().stream()
+                    .map(AvailableCustomerDto::new)
+                    .collect(Collectors.toList());
+        }
     }
 }

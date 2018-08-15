@@ -66,17 +66,16 @@ public class SecurityService {
         tokenRepository.invalidate(userId);
     }
 
-    public User getCurrentUser() {
-        return getPrincipal()
-                .map(principal -> (User) principal)
-                .map(user -> userService.getUser(user.getId()).orElseThrow(UserNotFoundException::new))
-                .orElseThrow(UserIsNotLoggedInException::new);
+    public Long getCurrentUserId() {
+        Object principal = getPrincipal().orElseThrow(UserIsNotLoggedInException::new);
+        return ((User) principal).getId();
     }
 
     private Optional<Object> getPrincipal() {
         return getAuthentication()
                 .map(Authentication::getPrincipal);
     }
+
 
     public boolean isTypeOf(UserType type) {
         return getAuthentication()

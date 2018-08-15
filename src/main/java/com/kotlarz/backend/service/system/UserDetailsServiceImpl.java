@@ -1,5 +1,6 @@
 package com.kotlarz.backend.service.system;
 
+import com.kotlarz.backend.repository.system.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private UserService userService;
+    private UserRepository userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

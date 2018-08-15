@@ -1,6 +1,9 @@
 package com.kotlarz.frontend.presenter.configuration.users;
 
+import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.service.logs.CustomerService;
 import com.kotlarz.backend.service.system.UserService;
+import com.kotlarz.configuration.security.exception.UserNotFoundException;
 import com.kotlarz.frontend.dto.UserDto;
 import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.presenter.configuration.users.single.SingleUserConfigPresenter;
@@ -34,6 +37,9 @@ public class UsersConfigPresenter
     @Autowired
     private EditUserView editUserView;
 
+    @Autowired
+    private CustomerService customerService;
+
     @Override
     public void initView(UsersConfigurationView view) {
         init(view);
@@ -48,13 +54,15 @@ public class UsersConfigPresenter
     private void initUsersGrid(UsersConfigurationView view) {
         view.setOnUserClicked(userDto -> {
             mainUI.addWindow(editUserView);
-            editUserView.readBean(userDto);
+
+            User user = userService.getUserWithCustomers(userDto.getId()).orElseThrow(UserNotFoundException::new);
+            editUserView.readBean(new UserDto(user, true));
         });
     }
 
     private void loadUsers(UsersConfigurationView view) {
         List<UserDto> customers = userService.getUsers().stream()
-                .map(UserDto::new)
+                .map(domain -> new UserDto(domain, false))
                 .collect(Collectors.toList());
         view.setUsers(customers);
     }
