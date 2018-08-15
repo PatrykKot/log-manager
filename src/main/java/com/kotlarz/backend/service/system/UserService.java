@@ -3,6 +3,7 @@ package com.kotlarz.backend.service.system;
 import com.kotlarz.backend.domain.system.User;
 import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.repository.system.UserRepository;
+import com.kotlarz.backend.service.logs.CustomerService;
 import com.kotlarz.backend.service.system.exception.UserAlreadyExistException;
 import com.kotlarz.configuration.security.exception.UserNotFoundException;
 import com.kotlarz.configuration.security.service.SecurityService;
@@ -18,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,6 +32,9 @@ public class UserService {
 
     @Autowired
     private SecurityService securityService;
+
+    @Autowired
+    private CustomerService customerService;
 
     @PostConstruct
     @Transactional
@@ -82,7 +87,10 @@ public class UserService {
                 .username(userDto.getUsername())
                 .type(userDto.getType())
                 .passwordHash(passwordEncoder.encode(userDto.getRawPassword()))
-                // TODO customers
+                .availableCustomers(userDto.getAvailableCustomers().stream()
+                        .map(dto -> customerService.getCustomer(dto.getId())
+                                .orElseThrow(RuntimeException::new))
+                        .collect(Collectors.toList()))
                 .build();
 
         userRepository.save(user);
@@ -99,8 +107,13 @@ public class UserService {
             }
 
             toUpdate.setUsername(dto.getUsername());
-            // update customers
         }
+
+        toUpdate.getAvailableCustomers().clear();
+        toUpdate.setAvailableCustomers(dto.getAvailableCustomers().stream()
+                .map(customerDto -> customerService.getCustomer(customerDto.getId())
+                        .orElseThrow(RuntimeException::new))
+                .collect(Collectors.toList()));
 
         if (StringUtils.isNotEmpty(dto.getRawPassword())) {
             toUpdate.setPasswordHash(passwordEncoder.encode(dto.getRawPassword()));

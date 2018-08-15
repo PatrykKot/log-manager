@@ -1,8 +1,10 @@
 package com.kotlarz.frontend.presenter.configuration.users.single;
 
+import com.kotlarz.backend.service.logs.CustomerService;
 import com.kotlarz.backend.service.system.UserService;
 import com.kotlarz.backend.service.system.exception.UserAlreadyExistException;
 import com.kotlarz.frontend.dto.UserDto;
+import com.kotlarz.frontend.view.configuration.users.single.CreateUserView;
 import com.kotlarz.frontend.view.configuration.users.single.EditUserView;
 import com.kotlarz.frontend.view.configuration.users.single.SingleUserConfigView;
 import com.vaadin.data.ValidationException;
@@ -26,7 +28,10 @@ public class SingleUserConfigPresenter {
     @Autowired
     private UserService userService;
 
-    public void init(SingleUserConfigView createUserView) {
+    @Autowired
+    private CustomerService customerService;
+
+    public void init(CreateUserView createUserView) {
         init(createUserView, userDto -> {
             try {
                 userService.create(userDto);

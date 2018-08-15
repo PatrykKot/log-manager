@@ -21,8 +21,6 @@ public class SingleUserConfigViewDesign
 
     protected Grid<AvailableCustomerDto> availableCustomersGrid;
 
-    protected Button addCustomerButton;
-
     public SingleUserConfigViewDesign() {
         Design.read(this);
     }
