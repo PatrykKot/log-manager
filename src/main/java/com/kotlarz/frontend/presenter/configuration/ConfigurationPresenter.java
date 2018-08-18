@@ -4,7 +4,6 @@ import com.kotlarz.frontend.presenter.Presenter;
 import com.kotlarz.frontend.util.PathBuilder;
 import com.kotlarz.frontend.view.configuration.ConfigurationView;
 import com.kotlarz.frontend.view.configuration.customers.CustomersGridConfigView;
-import com.kotlarz.frontend.view.configuration.systemconfiguration.SystemConfigurationView;
 import com.kotlarz.frontend.view.configuration.users.UsersConfigurationView;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -26,10 +25,6 @@ public class ConfigurationPresenter
 
         view.addOnUsersClicked(event -> navigator.navigateTo(PathBuilder.getInstance()
                 .view(UsersConfigurationView.class)
-                .build()));
-
-        view.addOnSystemConfigurationClicked(event -> navigator.navigateTo(PathBuilder.getInstance()
-                .view(SystemConfigurationView.class)
                 .build()));
     }
 }

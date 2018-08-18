@@ -39,19 +39,21 @@ public class CustomerService {
     @PostConstruct
     @Transactional
     void memInit() {
-        LongStream.range(0, 10).forEach(clientId -> {
-            CustomerEntity customer = customerMockService.mockCustomer();
+        if (customerRepository.count() == 0) {
+            LongStream.range(0, 10).forEach(clientId -> {
+                CustomerEntity customer = customerMockService.mockCustomer();
 
-            FormatterConfigEntity formatterConfig = FormatterConfigEntity.builder()
-                    .customer(customer)
-                    .pattern("{date} {thread} {user} {level} {classname} {content}")
-                    .fill(true)
-                    .build();
+                FormatterConfigEntity formatterConfig = FormatterConfigEntity.builder()
+                        .customer(customer)
+                        .pattern("{date} {thread} {user} {level} {classname} {content}")
+                        .fill(true)
+                        .build();
 
-            customer.setFormatter(formatterConfig);
-            customer.getReports().forEach(report -> report.setCustomer(customer));
-            customerRepository.save(customer);
-        });
+                customer.setFormatter(formatterConfig);
+                customer.getReports().forEach(report -> report.setCustomer(customer));
+                customerRepository.save(customer);
+            });
+        }
     }
 
     @Transactional

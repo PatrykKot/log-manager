@@ -1,3 +1,6 @@
-<vaadin-horizontal-layout>
-    <vaadin-label>Dashboard!</vaadin-label>
-</vaadin-horizontal-layout>
+<vaadin-vertical-layout size-full>
+    <vaadin-label height="15px">Dashboard</vaadin-label>
+    <vaadin-panel size-full :expand>
+        <vaadin-grid _id="reportsGrid" size-full/>
+    </vaadin-panel>
+</vaadin-vertical-layout>

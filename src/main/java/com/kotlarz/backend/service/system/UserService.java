@@ -39,17 +39,19 @@ public class UserService {
     @PostConstruct
     @Transactional
     public void mockUsers() {
-        userRepository.save(User.builder()
-                .username("admin")
-                .passwordHash(passwordEncoder.encode("admin"))
-                .type(UserType.ADMIN)
-                .build());
+        if (userRepository.count() == 0) {
+            userRepository.save(User.builder()
+                    .username("admin")
+                    .passwordHash(passwordEncoder.encode("admin"))
+                    .type(UserType.ADMIN)
+                    .build());
 
-        userRepository.save(User.builder()
-                .username("user")
-                .passwordHash(passwordEncoder.encode("user"))
-                .type(UserType.STANDARD)
-                .build());
+            userRepository.save(User.builder()
+                    .username("user")
+                    .passwordHash(passwordEncoder.encode("user"))
+                    .type(UserType.STANDARD)
+                    .build());
+        }
     }
 
     @Transactional

@@ -17,25 +17,16 @@ public class ConfigurationView extends ConfigurationViewDesign implements View {
     @Autowired
     private ConfigurationPresenter presenter;
 
-
     @PostConstruct
-    void init()
-    {
-        presenter.initView( this );
+    void init() {
+        presenter.initView(this);
     }
 
-    public void addOnCustomersClicked( Button.ClickListener listener )
-    {
-        customersButton.addClickListener( listener );
+    public void addOnCustomersClicked(Button.ClickListener listener) {
+        customersButton.addClickListener(listener);
     }
 
-    public void addOnUsersClicked( Button.ClickListener listener )
-    {
-        usersButton.addClickListener( listener );
-    }
-
-    public void addOnSystemConfigurationClicked( Button.ClickListener listener )
-    {
-        systemConfigurationButton.addClickListener( listener );
+    public void addOnUsersClicked(Button.ClickListener listener) {
+        usersButton.addClickListener(listener);
     }
 }

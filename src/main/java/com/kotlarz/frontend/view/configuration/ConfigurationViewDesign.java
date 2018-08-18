@@ -11,7 +11,6 @@ public class ConfigurationViewDesign extends VerticalLayout {
 
     protected Button usersButton;
 
-    protected Button systemConfigurationButton;
     public ConfigurationViewDesign() {
         Design.read(this);
     }
