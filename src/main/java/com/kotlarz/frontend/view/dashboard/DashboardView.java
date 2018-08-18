@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.view.dashboard;
 
-import com.kotlarz.frontend.dto.DashboardReportDto;
+import com.kotlarz.backend.repository.projection.DashboardReportProjection;
 import com.kotlarz.frontend.presenter.dashboard.DashboardPresenter;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.navigator.View;
@@ -29,11 +29,11 @@ public class DashboardView
 
     @PostConstruct
     public void init() {
-        reportsGrid.addColumn(DashboardReportDto::getCustomerName)
+        reportsGrid.addColumn(DashboardReportProjection::getCustomerName)
                 .setCaption("Customer");
-        reportsGrid.addColumn(DashboardReportDto::getDate)
+        reportsGrid.addColumn(DashboardReportProjection::getReportDate)
                 .setCaption("Date");
-        reportsGrid.addColumn(DashboardReportDto::getLength)
+        reportsGrid.addColumn(DashboardReportProjection::getEventsCount)
                 .setCaption("Length");
 
         presenter.initView(this);
@@ -44,7 +44,12 @@ public class DashboardView
         onEnterEvent.accept(event);
     }
 
-    public void setReportsProvider(DataProvider<DashboardReportDto, Void> provider) {
+    public void setReportsProvider(DataProvider<DashboardReportProjection, Void> provider) {
         reportsGrid.setDataProvider(provider);
+    }
+
+    public void onSelect(Consumer<DashboardReportProjection> handler) {
+        reportsGrid.addSelectionListener(event -> event.getFirstSelectedItem()
+                .ifPresent(handler));
     }
 }

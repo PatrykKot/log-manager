@@ -32,6 +32,7 @@ repositories {
     mavenCentral()
     maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
     maven { url "http://oss.sonatype.org/content/repositories/vaadin-snapshots/" }
+    maven { url "http://maven.vaadin.com/vaadin-addons" }
 }
 
 sourceCompatibility = 1.8
@@ -51,6 +52,7 @@ dependencies {
 
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.3.0.CR1'
     compile("com.h2database:h2")
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.4'
 
     compile("org.springframework.boot:spring-boot-devtools")
 

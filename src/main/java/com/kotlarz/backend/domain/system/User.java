@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
+@Table(name = "user_tab")
 @Getter
 @Setter
 @Builder

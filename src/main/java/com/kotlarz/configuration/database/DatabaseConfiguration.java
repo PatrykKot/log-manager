@@ -1,6 +1,5 @@
 package com.kotlarz.configuration.database;
 
-import org.h2.Driver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -22,10 +21,16 @@ import javax.sql.DataSource;
 public class DatabaseConfiguration {
     @Bean("h2datasource")
     public DataSource getDataSource() {
+        /*return DataSourceBuilder.create()
+                .url("jdbc:h2:mem:test")
+                .driverClassName(org.h2.Driver.class.getName())
+                .build();*/
 
         return DataSourceBuilder.create()
-                .url("jdbc:h2:mem:test")
-                .driverClassName(Driver.class.getName())
+                .url("jdbc:postgresql:vaadin_master_project")
+                .driverClassName(org.postgresql.Driver.class.getName())
+                .username("postgres")
+                .password("postgres")
                 .build();
     }
 
@@ -33,7 +38,9 @@ public class DatabaseConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("h2datasource") DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setDatabase(Database.POSTGRESQL);
         vendorAdapter.setDatabase(Database.H2);
+        vendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean factory =
                 new LocalContainerEntityManagerFactoryBean();
