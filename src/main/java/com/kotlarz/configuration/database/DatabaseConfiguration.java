@@ -39,7 +39,7 @@ public class DatabaseConfiguration {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
         vendorAdapter.setDatabase(Database.POSTGRESQL);
-        vendorAdapter.setDatabase(Database.H2);
+        //adminvendorAdapter.setDatabase(Database.H2);
         vendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean factory =

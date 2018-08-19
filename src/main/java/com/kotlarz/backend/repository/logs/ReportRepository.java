@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface ReportRepository extends JpaRepository<ReportEntity, Long>, JpaSpecificationExecutor<ReportEntity> {
@@ -20,10 +19,17 @@ public interface ReportRepository extends JpaRepository<ReportEntity, Long>, Jpa
             "report.customer.id as customerId," +
             "report.date as reportDate," +
             "count(elements(report.events)) as eventsCount " +
-            "from ReportEntity report where report.customer.id in :customerIds " +
+            "from ReportEntity report where report.customer.id in " +
+            "(select customer.id from CustomerEntity customer join customer.permittedUsers user where user.id = :userId ) " +
             "group by report.id, report.customer.id, report.customer.name, report.date")
-    Page<DashboardReportProjection> findByCustomers(@Param("customerIds") Collection<Long> customerIds, Pageable pageable);
+    Page<DashboardReportProjection> findForCustomers(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("select count(*) from ReportEntity report where report.customer.id in :customerIds")
-    Long countByCustomers(@Param("customerIds") Collection<Long> customerIds);
+    @Query("select report.id as id," +
+            "report.customer.name as customerName," +
+            "report.customer.id as customerId," +
+            "report.date as reportDate," +
+            "count(elements(report.events)) as eventsCount " +
+            "from ReportEntity report " +
+            "group by report.id, report.customer.id, report.customer.name, report.date")
+    Page<DashboardReportProjection> findForAdmin(Pageable pageable);
 }

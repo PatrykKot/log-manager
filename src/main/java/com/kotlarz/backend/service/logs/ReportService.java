@@ -3,11 +3,13 @@ package com.kotlarz.backend.service.logs;
 import com.kotlarz.backend.domain.logs.CustomerEntity;
 import com.kotlarz.backend.domain.logs.CustomerTokenEntity;
 import com.kotlarz.backend.domain.logs.ReportEntity;
+import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.repository.logs.CustomerTokenRepository;
 import com.kotlarz.backend.repository.logs.ReportRepository;
 import com.kotlarz.backend.repository.projection.DashboardReportProjection;
 import com.kotlarz.backend.web.dto.NewEventDto;
 import com.kotlarz.backend.web.dto.NewReportDto;
+import com.kotlarz.configuration.security.service.SecurityService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class ReportService {
     private CustomerTokenRepository tokenRepository;
 
     @Autowired
-    private CustomerService customerService;
+    private SecurityService securityService;
 
     @Transactional
     public List<ReportEntity> getReports(Long customerId) {
@@ -58,7 +60,6 @@ public class ReportService {
         Assert.notNull(newReportDto.getReported(), "Report date cannot be null");
     }
 
-
     private ReportEntity toEntity(NewReportDto reportDto) {
         CustomerTokenEntity customerToken = tokenRepository.findByToken(reportDto.getToken());
         if (customerToken == null) {
@@ -76,18 +77,11 @@ public class ReportService {
     }
 
     @Transactional
-    public Page<DashboardReportProjection> getLatestReportsForUserDto(Long userId, Pageable pageable) {
-        return reportRepository.findByCustomers(getCustomersIdForUser(userId), pageable);
-    }
-
-    @Transactional
-    public Long countLatestReportsForUserDto(Long userId) {
-        return reportRepository.countByCustomers(getCustomersIdForUser(userId));
-    }
-
-    private List<Long> getCustomersIdForUser(Long userId) {
-        return customerService.getCustomersForUser(userId).stream()
-                .map(CustomerEntity::getId)
-                .collect(Collectors.toList());
+    public Page<DashboardReportProjection> getLatestReportsForUser(Long userId, Pageable pageable) {
+        if (securityService.isTypeOf(UserType.ADMIN)) {
+            return reportRepository.findForAdmin(pageable);
+        } else {
+            return reportRepository.findForCustomers(userId, pageable);
+        }
     }
 }

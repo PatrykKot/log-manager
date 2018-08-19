@@ -6,7 +6,7 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
 import java.util.function.Consumer;
 
 @SpringView(name = DashboardView.NAME)
-@UIScope
+@ViewScope
 public class DashboardView
         extends DashboardViewDesign
         implements View {

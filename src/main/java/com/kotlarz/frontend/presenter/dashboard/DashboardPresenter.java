@@ -10,14 +10,16 @@ import com.kotlarz.frontend.util.pageable.VaadinPageable;
 import com.kotlarz.frontend.view.customers.CustomersView;
 import com.kotlarz.frontend.view.dashboard.DashboardView;
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.Query;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringNavigator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 @SpringComponent
-@UIScope
+@ViewScope
 @Slf4j
 public class DashboardPresenter implements Presenter<DashboardView> {
     @Autowired
@@ -43,7 +45,12 @@ public class DashboardPresenter implements Presenter<DashboardView> {
 
     private DataProvider<DashboardReportProjection, Void> buildDataProvider() {
         return DataProvider.fromCallbacks(
-                query -> reportService.getLatestReportsForUserDto(securityService.getCurrentUserId(), new VaadinPageable(query)).getContent().stream(),
-                query -> reportService.countLatestReportsForUserDto(securityService.getCurrentUserId()).intValue());
+                query -> getPage(query).getContent().stream(),
+                query -> getPage(query).getContent().size());
+    }
+
+    private Page<DashboardReportProjection> getPage(Query<DashboardReportProjection, Void> query) {
+        return reportService.getLatestReportsForUser(securityService.getCurrentUserId(),
+                new VaadinPageable(query));
     }
 }
