@@ -9,14 +9,14 @@ import com.kotlarz.frontend.view.configuration.customers.CustomersGridConfigView
 import com.kotlarz.frontend.view.configuration.customers.single.CreateCustomerView;
 import com.kotlarz.frontend.view.configuration.customers.single.EditCustomerView;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringComponent
-@UIScope
+@ViewScope
 public class CustomersGridConfigPresenter
         implements Presenter<CustomersGridConfigView> {
     @Autowired

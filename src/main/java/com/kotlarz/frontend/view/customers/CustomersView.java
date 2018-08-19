@@ -5,7 +5,7 @@ import com.kotlarz.frontend.presenter.customers.CustomersPresenter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @SpringView(name = CustomersView.NAME)
-@UIScope
+@ViewScope
 public class CustomersView extends CustomersViewDesign implements View {
     public static final String NAME = "customers";
 

@@ -4,7 +4,7 @@ import com.kotlarz.frontend.dto.UserDto;
 import com.kotlarz.frontend.presenter.configuration.users.single.SingleUserConfigPresenter;
 import com.kotlarz.frontend.util.validator.NotEmptyStringValidator;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.AbstractOrderedLayout;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @SpringComponent
-@UIScope
+@ViewScope
 public class CreateUserView
         extends SingleUserConfigView {
     @Autowired

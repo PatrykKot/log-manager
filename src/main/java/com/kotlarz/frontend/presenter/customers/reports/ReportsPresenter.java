@@ -10,7 +10,7 @@ import com.kotlarz.frontend.view.customers.CustomersView;
 import com.kotlarz.frontend.view.customers.reports.ReportsView;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringNavigator;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringComponent
-@UIScope
+@ViewScope
 public class ReportsPresenter implements Presenter<ReportsView> {
     public static final Integer CUSTOMER_NAME_INDEX = 0;
 

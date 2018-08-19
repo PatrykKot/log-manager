@@ -4,7 +4,7 @@ import com.kotlarz.frontend.dto.ReportDto;
 import com.kotlarz.frontend.presenter.customers.reports.ReportsPresenter;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @SpringComponent
-@UIScope
+@ViewScope
 @Getter
 @Setter
 public class ReportsView extends ReportsViewDesign implements View {

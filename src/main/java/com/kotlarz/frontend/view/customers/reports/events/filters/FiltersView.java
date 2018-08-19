@@ -2,13 +2,13 @@ package com.kotlarz.frontend.view.customers.reports.events.filters;
 
 import com.kotlarz.frontend.dto.EventFilter;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 @SpringComponent
-@UIScope
+@ViewScope
 public class FiltersView extends FiltersViewDesign {
     public void setThreadItems(List<String> threads) {
         threadCombo.setItems(threads);

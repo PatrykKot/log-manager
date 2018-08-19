@@ -5,7 +5,7 @@ import com.kotlarz.frontend.presenter.configuration.customers.CustomersGridConfi
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Button;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @SpringView(name = CustomersGridConfigView.NAME)
-@UIScope
+@ViewScope
 public class CustomersGridConfigView extends CustomersGridConfigViewDesign implements View {
     public static final String NAME = "configuration/customers";
 

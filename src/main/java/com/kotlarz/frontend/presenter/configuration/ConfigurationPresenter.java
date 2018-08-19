@@ -6,12 +6,12 @@ import com.kotlarz.frontend.view.configuration.ConfigurationView;
 import com.kotlarz.frontend.view.configuration.customers.CustomersGridConfigView;
 import com.kotlarz.frontend.view.configuration.users.UsersConfigurationView;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringNavigator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringComponent
-@UIScope
+@ViewScope
 public class ConfigurationPresenter
         implements Presenter<ConfigurationView> {
     @Autowired

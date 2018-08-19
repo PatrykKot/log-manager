@@ -9,7 +9,7 @@ import com.kotlarz.frontend.view.configuration.users.single.EditUserView;
 import com.kotlarz.frontend.view.configuration.users.single.SingleUserConfigView;
 import com.vaadin.data.ValidationException;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Notification;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.function.Function;
 
 @SpringComponent
-@UIScope
+@ViewScope
 @Slf4j
 public class SingleUserConfigPresenter {
     @Setter

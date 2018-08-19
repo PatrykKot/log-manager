@@ -15,7 +15,7 @@ import com.kotlarz.frontend.view.customers.reports.events.EventsView;
 import com.kotlarz.frontend.view.customers.reports.events.filters.FiltersView;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SpringComponent
-@UIScope
+@ViewScope
 public class EventsPresenter implements Presenter<EventsView> {
     public static final String REPORT_URL_CONST = "events";
 

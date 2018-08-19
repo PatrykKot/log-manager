@@ -7,7 +7,7 @@ import com.kotlarz.frontend.view.dashboard.DashboardView;
 import com.kotlarz.frontend.view.login.LoginView;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Notification;
@@ -19,7 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 
 @Slf4j
 @SpringComponent
-@UIScope
+@ViewScope
 public class LoginPresenter
         implements Presenter<LoginView> {
 
