@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.view.dashboard;
 
-import com.kotlarz.backend.repository.projection.DashboardReportProjection;
+import com.kotlarz.backend.repository.logs.projection.DashboardReportProjection;
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;

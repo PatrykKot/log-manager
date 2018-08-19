@@ -22,6 +22,10 @@ public class SingleCustomerConfigViewDesign
 
     protected Button deleteButton;
 
+    protected TextField tokenField;
+
+    protected Button generateTokenButton;
+
     public SingleCustomerConfigViewDesign() {
         Design.read(this);
     }

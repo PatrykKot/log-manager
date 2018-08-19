@@ -6,7 +6,7 @@ import com.kotlarz.backend.domain.logs.ReportEntity;
 import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.repository.logs.CustomerTokenRepository;
 import com.kotlarz.backend.repository.logs.ReportRepository;
-import com.kotlarz.backend.repository.projection.DashboardReportProjection;
+import com.kotlarz.backend.repository.logs.projection.DashboardReportProjection;
 import com.kotlarz.backend.web.dto.NewEventDto;
 import com.kotlarz.backend.web.dto.NewReportDto;
 import com.kotlarz.configuration.security.service.SecurityService;
@@ -63,7 +63,7 @@ public class ReportService {
     private ReportEntity toEntity(NewReportDto reportDto) {
         CustomerTokenEntity customerToken = tokenRepository.findByToken(reportDto.getToken());
         if (customerToken == null) {
-            throw new IllegalArgumentException("Cannot find customer with token " + reportDto.getToken());
+            throw new IllegalArgumentException("Cannot find customer with customerToken " + reportDto.getToken());
         }
 
         CustomerEntity customer = customerToken.getCustomer();

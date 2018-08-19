@@ -33,15 +33,30 @@ public abstract class SingleCustomerConfigView
     }
 
     private void initBinder() {
-        binder.forField(customerNameField)
-                .withValidator(new NotEmptyStringValidator())
-                .bind(CustomerDto::getName, CustomerDto::setName);
-        binder.forField(formatterPatternField)
-                .withValidator(new NotEmptyStringValidator())
+        initCustomerNameField();
+        initFormatterPatternField();
+        initClearLogsField();
+        initFillLogsField();
+        initTokenField();
+    }
+
+    private void initTokenField() {
+        binder.forField(tokenField)
                 .bind(
-                        customer -> customer.getPattern(),
-                        (customer, value) -> customer.setPattern(value)
+                        CustomerDto::getToken,
+                        CustomerDto::setToken
                 );
+    }
+
+    private void initFillLogsField() {
+        binder.forField(fillLogsCheckBox)
+                .bind(
+                        CustomerDto::getFillPattern,
+                        CustomerDto::setFillPattern
+                );
+    }
+
+    private void initClearLogsField() {
         binder.forField(clearLogsAfterDaysField)
                 .withValidator(new PositiveIntegerValidator())
                 .bind(
@@ -60,11 +75,21 @@ public abstract class SingleCustomerConfigView
                             }
                         }
                 );
-        binder.forField(fillLogsCheckBox)
+    }
+
+    private void initFormatterPatternField() {
+        binder.forField(formatterPatternField)
+                .withValidator(new NotEmptyStringValidator())
                 .bind(
-                        customer -> customer.getFillPattern(),
-                        (customer, value) -> customer.setFillPattern(value)
+                        CustomerDto::getPattern,
+                        CustomerDto::setPattern
                 );
+    }
+
+    private void initCustomerNameField() {
+        binder.forField(customerNameField)
+                .withValidator(new NotEmptyStringValidator())
+                .bind(CustomerDto::getName, CustomerDto::setName);
     }
 
     public void onButtonClicked(Runnable call) {
@@ -73,5 +98,13 @@ public abstract class SingleCustomerConfigView
 
     public void onDeleteButtonClicked(Consumer<CustomerDto> handler) {
         deleteButton.addClickListener(event -> handler.accept(readCustomer));
+    }
+
+    public void onGenerateTokenButtonClicked(Runnable handler) {
+        generateTokenButton.addClickListener(event -> handler.run());
+    }
+
+    public void setToken(String token) {
+        tokenField.setValue(token);
     }
 }

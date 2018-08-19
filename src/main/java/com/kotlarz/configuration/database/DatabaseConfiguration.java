@@ -21,26 +21,26 @@ import javax.sql.DataSource;
 public class DatabaseConfiguration {
     @Bean("h2datasource")
     public DataSource getDataSource() {
-        /*return DataSourceBuilder.create()
+        return DataSourceBuilder.create()
                 .url("jdbc:h2:mem:test")
                 .driverClassName(org.h2.Driver.class.getName())
-                .build();*/
+                .build();
 
-        return DataSourceBuilder.create()
+        /*return DataSourceBuilder.create()
                 .url("jdbc:postgresql:vaadin_master_project")
                 .driverClassName(org.postgresql.Driver.class.getName())
                 .username("postgres")
                 .password("postgres")
-                .build();
+                .build();*/
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("h2datasource") DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
-        vendorAdapter.setDatabase(Database.POSTGRESQL);
-        //adminvendorAdapter.setDatabase(Database.H2);
-        vendorAdapter.setShowSql(true);
+        //vendorAdapter.setDatabase(Database.POSTGRESQL);
+        vendorAdapter.setDatabase(Database.H2);
+        //vendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean factory =
                 new LocalContainerEntityManagerFactoryBean();

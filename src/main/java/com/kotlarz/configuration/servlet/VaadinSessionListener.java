@@ -1,6 +1,6 @@
 package com.kotlarz.configuration.servlet;
 
-import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.domain.system.UserEntity;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringComponent;
 import org.springframework.security.core.Authentication;
@@ -30,8 +30,8 @@ public class VaadinSessionListener {
                         Authentication authentication = context.getAuthentication();
                         if (authentication != null) {
                             Object principal = authentication.getPrincipal();
-                            if (principal instanceof User) {
-                                return ((User) principal).getId().equals(userId);
+                            if (principal instanceof UserEntity) {
+                                return ((UserEntity) principal).getId().equals(userId);
                             }
                         }
                     }

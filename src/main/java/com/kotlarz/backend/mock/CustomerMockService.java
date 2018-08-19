@@ -32,10 +32,14 @@ public class CustomerMockService {
 
     private List<ReportEntity> mockLogReports() {
         return IntStream.range(3, new Random().nextInt(50) + 3)
-                .mapToObj(val -> ReportEntity.builder()
-                        .date(new Date())
-                        .events(mockLogEvents())
-                        .build())
+                .mapToObj(val -> {
+                    Date reportDate = new Date(new Date().getTime() - val * 100000);
+
+                    return ReportEntity.builder()
+                            .date(reportDate)
+                            .events(mockLogEvents())
+                            .build();
+                })
                 .peek(report -> report.getEvents().forEach(event -> event.setReport(report)))
                 .collect(Collectors.toList());
     }

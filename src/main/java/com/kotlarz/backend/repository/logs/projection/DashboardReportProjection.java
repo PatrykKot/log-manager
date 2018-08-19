@@ -1,4 +1,4 @@
-package com.kotlarz.backend.repository.projection;
+package com.kotlarz.backend.repository.logs.projection;
 
 import java.util.Date;
 

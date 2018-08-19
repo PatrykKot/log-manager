@@ -1,6 +1,6 @@
 package com.kotlarz.configuration.security.service;
 
-import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.domain.system.UserEntity;
 import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.service.system.UserService;
 import com.kotlarz.configuration.security.exception.UserIsNotLoggedInException;
@@ -54,7 +54,7 @@ public class SecurityService {
 
     public void logOut() {
         getPrincipal().ifPresent(principal -> {
-            Long currentUserId = ((User) principal).getId();
+            Long currentUserId = ((UserEntity) principal).getId();
             tokenRepository.invalidate(currentUserId);
         });
 
@@ -68,7 +68,7 @@ public class SecurityService {
 
     public Long getCurrentUserId() {
         Object principal = getPrincipal().orElseThrow(UserIsNotLoggedInException::new);
-        return ((User) principal).getId();
+        return ((UserEntity) principal).getId();
     }
 
     private Optional<Object> getPrincipal() {
@@ -90,7 +90,7 @@ public class SecurityService {
     }
 
     public void rememberMe(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
         setCookie(createCookie(user.getId()));
     }
 
@@ -113,7 +113,7 @@ public class SecurityService {
                 .ifPresent(cookie -> {
                     String token = cookie.getValue();
                     tokenRepository.get(token).ifPresent(userId -> {
-                        User user = userService.getUser(userId).orElseThrow(UserNotFoundException::new);
+                        UserEntity user = userService.getUser(userId).orElseThrow(UserNotFoundException::new);
                         Authentication authentication = new RememberMeAuthenticationToken(token, user, user.getAuthorities());
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     });

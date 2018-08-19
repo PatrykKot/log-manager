@@ -1,6 +1,6 @@
 package com.kotlarz.backend.domain.logs;
 
-import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.domain.system.UserEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,16 +23,17 @@ public class CustomerEntity {
     @Column(nullable = false)
     private Long clearLogsAfterDays;
 
-    @JoinColumn(name = "formatterid")
+    @JoinColumn(name = "formatterid", nullable = false)
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private FormatterConfigEntity formatter;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReportEntity> reports;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CustomerTokenEntity> tokens;
+    @JoinColumn(name = "tokenid", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    private CustomerTokenEntity customerToken;
 
     @ManyToMany(mappedBy = "availableCustomers")
-    private List<User> permittedUsers;
+    private List<UserEntity> permittedUsers;
 }

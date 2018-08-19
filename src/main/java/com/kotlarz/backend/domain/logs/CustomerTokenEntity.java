@@ -15,8 +15,9 @@ public class CustomerTokenEntity {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String token;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "formatter")
     private CustomerEntity customer;
 }

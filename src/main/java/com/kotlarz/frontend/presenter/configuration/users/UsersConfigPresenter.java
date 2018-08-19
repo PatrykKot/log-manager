@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.presenter.configuration.users;
 
-import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.domain.system.UserEntity;
 import com.kotlarz.backend.service.logs.CustomerService;
 import com.kotlarz.backend.service.system.UserService;
 import com.kotlarz.configuration.security.exception.UserNotFoundException;
@@ -61,7 +61,7 @@ public class UsersConfigPresenter
                     .collect(Collectors.toList());
             editUserView.setAllCustomers(allCustomers);
 
-            User user = userService.getUserWithCustomers(userDto.getId()).orElseThrow(UserNotFoundException::new);
+            UserEntity user = userService.getUserWithCustomers(userDto.getId()).orElseThrow(UserNotFoundException::new);
             editUserView.readBean(new UserDto(user, true));
         });
     }

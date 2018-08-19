@@ -1,8 +1,9 @@
 package com.kotlarz.backend.service.logs;
 
 import com.kotlarz.backend.domain.logs.CustomerEntity;
+import com.kotlarz.backend.domain.logs.CustomerTokenEntity;
 import com.kotlarz.backend.domain.logs.FormatterConfigEntity;
-import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.domain.system.UserEntity;
 import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.mock.CustomerMockService;
 import com.kotlarz.backend.repository.logs.CustomerRepository;
@@ -19,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.LongStream;
 
 @Slf4j
@@ -49,7 +51,13 @@ public class CustomerService {
                         .fill(true)
                         .build();
 
+                CustomerTokenEntity token = CustomerTokenEntity.builder()
+                        .customer(customer)
+                        .token(UUID.randomUUID().toString())
+                        .build();
+
                 customer.setFormatter(formatterConfig);
+                customer.setCustomerToken(token);
                 customer.getReports().forEach(report -> report.setCustomer(customer));
                 customerRepository.save(customer);
             });
@@ -68,7 +76,7 @@ public class CustomerService {
 
     @Transactional
     public List<CustomerEntity> getCustomersForUser(Long userId) {
-        User user = userService.getUser(userId).orElseThrow(UserNotFoundException::new);
+        UserEntity user = userService.getUser(userId).orElseThrow(UserNotFoundException::new);
         if (user.getType() == UserType.ADMIN) {
             return getCustomers();
         } else {
@@ -98,6 +106,8 @@ public class CustomerService {
         formatter.setFill(dto.getFillPattern());
         formatter.setPattern(dto.getPattern());
 
+        CustomerTokenEntity customerToken = toUpdate.getCustomerToken();
+        customerToken.setToken(dto.getToken());
 
         customerRepository.save(toUpdate);
     }

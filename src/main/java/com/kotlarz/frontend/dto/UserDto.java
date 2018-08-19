@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.dto;
 
-import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.domain.system.UserEntity;
 import com.kotlarz.backend.domain.system.UserType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,7 @@ public class UserDto {
 
     private List<AvailableCustomerDto> availableCustomers;
 
-    public UserDto(User domain, Boolean mapCustomers
+    public UserDto(UserEntity domain, Boolean mapCustomers
     ) {
         id = domain.getId();
         username = domain.getUsername();

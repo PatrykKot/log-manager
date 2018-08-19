@@ -1,6 +1,6 @@
 package com.kotlarz.frontend.presenter.dashboard;
 
-import com.kotlarz.backend.repository.projection.DashboardReportProjection;
+import com.kotlarz.backend.repository.logs.projection.DashboardReportProjection;
 import com.kotlarz.backend.service.logs.ReportService;
 import com.kotlarz.configuration.security.service.SecurityService;
 import com.kotlarz.frontend.presenter.Presenter;

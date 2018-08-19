@@ -1,6 +1,6 @@
 package com.kotlarz.backend.service.system;
 
-import com.kotlarz.backend.domain.system.User;
+import com.kotlarz.backend.domain.system.UserEntity;
 import com.kotlarz.backend.domain.system.UserType;
 import com.kotlarz.backend.repository.system.UserRepository;
 import com.kotlarz.backend.service.logs.CustomerService;
@@ -40,13 +40,13 @@ public class UserService {
     @Transactional
     public void mockUsers() {
         if (userRepository.count() == 0) {
-            userRepository.save(User.builder()
+            userRepository.save(UserEntity.builder()
                     .username("admin")
                     .passwordHash(passwordEncoder.encode("admin"))
                     .type(UserType.ADMIN)
                     .build());
 
-            userRepository.save(User.builder()
+            userRepository.save(UserEntity.builder()
                     .username("user")
                     .passwordHash(passwordEncoder.encode("user"))
                     .type(UserType.STANDARD)
@@ -55,13 +55,13 @@ public class UserService {
     }
 
     @Transactional
-    public Optional<User> getUser(Long id) {
+    public Optional<UserEntity> getUser(Long id) {
         return Optional.ofNullable(userRepository.findOne(id));
     }
 
     @Transactional
-    public Optional<User> getUserWithCustomers(Long id) {
-        User user = userRepository.findOne(id);
+    public Optional<UserEntity> getUserWithCustomers(Long id) {
+        UserEntity user = userRepository.findOne(id);
         if (user != null) {
             Hibernate.initialize(user.getAvailableCustomers());
         }
@@ -70,12 +70,12 @@ public class UserService {
     }
 
     @Transactional
-    public Optional<User> findByUsername(String username) {
+    public Optional<UserEntity> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Transactional
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return userRepository.findAll();
     }
 
@@ -85,7 +85,7 @@ public class UserService {
             throw new UserAlreadyExistException();
         }
 
-        User user = User.builder()
+        UserEntity user = UserEntity.builder()
                 .username(userDto.getUsername())
                 .type(userDto.getType())
                 .passwordHash(passwordEncoder.encode(userDto.getRawPassword()))
@@ -100,7 +100,7 @@ public class UserService {
 
     @Transactional
     public void update(UserDto dto) throws UserAlreadyExistException {
-        User toUpdate = getUser(dto.getId()).orElseThrow(UserNotFoundException::new);
+        UserEntity toUpdate = getUser(dto.getId()).orElseThrow(UserNotFoundException::new);
         toUpdate.setType(dto.getType());
 
         if (!toUpdate.getUsername().equals(dto.getUsername())) {

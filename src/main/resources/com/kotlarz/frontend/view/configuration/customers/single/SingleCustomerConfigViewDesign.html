@@ -4,6 +4,13 @@
         <vaadin-text-field caption="Clear logs after [days]" _id="clearLogsAfterDaysField" width-full/>
         <vaadin-text-field caption="Formatter" _id="formatterPatternField" width-full/>
         <vaadin-check-box caption="Fill logs to equal spaces" _id="fillLogsCheckBox"/>
+
+        <vaadin-label>Token</vaadin-label>
+        <vaadin-horizontal-layout width-full>
+            <vaadin-text-field _id="tokenField" enabled="false" read-only="true" :expand="8" width-full/>
+            <vaadin-button _id="generateTokenButton" :expand="3" width-full>Generate</vaadin-button>
+        </vaadin-horizontal-layout>
+
         <vaadin-horizontal-layout>
             <vaadin-button _id="formButton"/>
             <vaadin-button _id="deleteButton">Delete</vaadin-button>
