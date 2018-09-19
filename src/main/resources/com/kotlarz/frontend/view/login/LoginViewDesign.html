@@ -1,6 +1,10 @@
-<vaadin-vertical-layout>
-    <vaadin-text-field caption="Username" _id="usernameField"/>
-    <vaadin-password-field caption="Password" _id="passwordField"/>
-    <vaadin-check-box caption="Remember me" _id="rememberMeCheckbox"/>
-    <vaadin-button _id="loginButton">Log in</vaadin-button>
+<vaadin-vertical-layout size-full>
+    <vaadin-panel :middle :center width="350px" height="350px" style-name="login-panel">
+        <vaadin-vertical-layout size-full :middle :center>
+            <vaadin-text-field caption="Username" _id="usernameField" width="100%"/>
+            <vaadin-password-field caption="Password" _id="passwordField" width="100%"/>
+            <vaadin-check-box caption="Remember me" _id="rememberMeCheckbox"/>
+            <vaadin-button _id="loginButton" :center>Log in</vaadin-button>
+        </vaadin-vertical-layout>
+    </vaadin-panel>
 </vaadin-vertical-layout>

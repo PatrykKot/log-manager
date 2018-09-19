@@ -2,10 +2,12 @@
 @import "menu";
 @import "events";
 @import "configuration";
+@import "login";
 
 @mixin apptheme {
   @include valo;
   @include menu;
   @include events;
   @include configuration;
+  @include login;
 }
